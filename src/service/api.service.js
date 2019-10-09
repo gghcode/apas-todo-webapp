@@ -6,7 +6,8 @@ import JwtService from './jwt.service';
 const ApiService = {
   init() {
     Vue.use(VueAxios, axios);
-    Vue.axios.defaults.baseURL = 'https://apas-todo-api.azurewebsites.net/api';
+    Vue.axios.defaults.baseURL = 'http://13.125.88.241:8080/api';
+    //Vue.axios.defaults.baseURL = 'https://apas-todo-api.azurewebsites.net/api';
   },
 
   setHeader() {
@@ -23,16 +24,20 @@ const ApiService = {
     }
   },
 
-  async get(resource, slug = '') {
-    try {
-      return Vue.axios.get(`${resource}/${slug}`);
-    } catch (error) {
+  get(resource, slug = '') {
+    return Vue.axios.get(`${resource}${slug}`).catch(error => {
       throw new Error(`[RWV] ApiService ${error}`);
-    }
+    });
   },
 
   post(resource, params) {
     return Vue.axios.post(`${resource}`, params);
+  },
+
+  delete(resource) {
+    return Vue.axios.delete(resource).catch(error => {
+      throw new Error(`[RWV] ApiService ${error}`);
+    });
   },
 };
 
