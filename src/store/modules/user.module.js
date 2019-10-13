@@ -1,6 +1,6 @@
 import { FETCH_PROFILE } from '../actions.type';
 import ApiService from '@/service/api.service';
-import { SET_PROFILE } from '../mutations.type';
+import { SET_USER } from '../mutations.type';
 
 const state = {
   errors: {},
@@ -14,18 +14,27 @@ const getters = {
 };
 
 const actions = {
-  async [FETCH_PROFILE](context, payload) {
-    const { username } = payload;
-
-    const { data } = await ApiService.get('users', username);
-    context.commit(SET_PROFILE, data);
-
-    return data;
-  },
+  // [FETCH_PROFILE](context, payload) {
+  //   return new Promise(({ resolve, reject }) => {
+  //     ApiService.get('user')
+  //       .then(data => {
+  //         console.log(data);
+  //         resolve(data);
+  //       })
+  //       .catch(err => {
+  //         console.log(err);
+  //         reject(err);
+  //       });
+  //   });
+  //   // const { username } = payload;
+  //   // const { data } = await ApiService.get('users', username);
+  //   // context.commit(SET_USER, data);
+  //   // return data;
+  // },
 };
 
 const mutations = {
-  [SET_PROFILE](state, profile) {
+  [SET_USER](state, profile) {
     state.profile = profile;
     state.errors = {};
   },

@@ -6,8 +6,8 @@ import JwtService from './jwt.service';
 const ApiService = {
   init() {
     Vue.use(VueAxios, axios);
-    Vue.axios.defaults.baseURL = 'http://13.125.88.241:8080/api';
-    //Vue.axios.defaults.baseURL = 'https://apas-todo-api.azurewebsites.net/api';
+    // Vue.axios.defaults.baseURL = 'http://ghcode.dev:8080/api';
+    Vue.axios.defaults.baseURL = 'https://apas-todo-api.azurewebsites.net/api';
   },
 
   setHeader() {

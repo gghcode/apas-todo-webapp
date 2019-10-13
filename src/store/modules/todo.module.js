@@ -36,17 +36,6 @@ const actions = {
       ApiService.delete(`todos`);
     });
   },
-  [CHECK_AUTH](context) {
-    if (JwtService.getToken()) {
-      ApiService.setHeader();
-      // ApiService.get('users', 'gyuhwan').then(({ data }) => {
-      //   console.log(data);
-      //   context.commit(SET_AUTH, data);
-      // });
-    } else {
-      context.commit(PURGE_AUTH);
-    }
-  },
 };
 
 const mutations = {

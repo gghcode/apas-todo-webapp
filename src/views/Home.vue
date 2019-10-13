@@ -1,8 +1,13 @@
 <template>
   <div>
-    <p>APAS Todo App</p>
-    <input placeholder="todo..." />
-    <button type="submit">Create</button>
+    <div class="input-todo">
+      <form v-on:submit="onSubmit">
+        <input v-model="title" placeholder="todo title" />
+        <input v-model="contents" placeholder="todo contents..." />
+        <button type="submit">Create</button>
+      </form>
+    </div>
+
     <button v-on:click="onLogout">Logout</button>
     <ul class="todos">
       <li v-for="todo of todos" :key="todo.id">
@@ -15,10 +20,13 @@
 <script>
 import { PURGE_AUTH } from '@/store/mutations.type';
 import JwtService from '@/service/jwt.service';
-import { FETCH_PROFILE, FETCH_TODOS } from '../store/actions.type';
+import { FETCH_PROFILE, FETCH_TODOS, LOGOUT } from '../store/actions.type';
 import { mapState } from 'vuex';
 
-const initialState = {};
+const initialState = {
+  title: '',
+  contents: '',
+};
 
 export default {
   data() {
@@ -29,14 +37,18 @@ export default {
       return this.$store.state.todo.todos;
     },
   }, // mapState(['todos']),
-  mounted() {
-    // this.$store.dispatch(FETCH_PROFILE);
-    this.$store.dispatch(FETCH_TODOS);
-  },
+  // mounted() {
+  //   // this.$store.dispatch(FETCH_PROFILE);
+  //   // this.$store.dispatch(FETCH_TODOS);
+  // },
   methods: {
+    onSubmit(e) {
+      console.log(this.title);
+    },
     onLogout(e) {
-      this.$store.commit(PURGE_AUTH);
-      this.$router.push({ name: 'login' });
+      this.$store
+        .dispatch(LOGOUT)
+        .then(() => this.$router.push({ name: 'login' }));
     },
   },
 };

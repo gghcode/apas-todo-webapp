@@ -4,6 +4,7 @@ import JwtService from '@/service/jwt.service';
 
 import home from '../views/Home';
 import login from '../views/Login';
+import register from '@/views/Register';
 
 Vue.use(VueRouter);
 
@@ -26,6 +27,11 @@ export default new VueRouter({
         if (JwtService.getToken()) next({ name: 'home' });
         else next();
       },
+    },
+    {
+      name: 'register',
+      path: '/register',
+      component: register,
     },
   ],
 });
