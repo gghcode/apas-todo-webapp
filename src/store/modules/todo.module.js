@@ -1,24 +1,24 @@
 import ApiService from '@/service/api.service';
-import JwtService, { getIdentity } from '@/service/jwt.service';
-import { CHECK_AUTH, FETCH_TODOS, REMOVE_TODO } from '../actions.type';
-import { SET_ERROR, SET_AUTH, PURGE_AUTH, SET_TODOS } from '../mutations.type';
+import { getIdentity } from '@/service/jwt.service';
+import { ADD_TODO, FETCH_TODOS, REMOVE_TODO } from '../actions.type';
+import { SET_ERROR, SET_TODOS } from '../mutations.type';
 
 const state = {
   errors: {},
   todos: [],
-  isAuthenticated: !!JwtService.getToken(),
 };
 
-const getters = {
-  // currentUser(state) {
-  //   return state.user;
-  // },
-  // isAuthenticated(state) {
-  //   return state.isAuthenticated;
-  // },
-};
+const getters = {};
 
 const actions = {
+  [ADD_TODO](context, { title, contents }) {
+    return new Promise((resolve, reject) => {
+      console.log(title, contents);
+      ApiService.post('todos', { title, contents }).then(({ data }) => {
+        resolve();
+      });
+    });
+  },
   [FETCH_TODOS](context) {
     return new Promise((resolve, reject) => {
       ApiService.get(`todos?user_id=${getIdentity().sub}`)
@@ -31,9 +31,11 @@ const actions = {
         });
     });
   },
-  [REMOVE_TODO](context) {
+  [REMOVE_TODO](context, { id }) {
     return new Promise((resolve, reject) => {
-      ApiService.delete(`todos`);
+      ApiService.delete(`todos/${id}`).then(({ data }) => {
+        resolve();
+      });
     });
   },
 };

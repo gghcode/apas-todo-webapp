@@ -17,6 +17,7 @@ export const FETCH_TODOS = 'fetchTodos';
 export const FETCH_PROFILE_FOLLOW = 'fetchProfileFollow';
 export const FETCH_PROFILE_UNFOLLOW = 'fetchProfileUnfollow';
 export const FETCH_TAGS = 'fetchTags';
+export const ADD_TODO = Symbol().toString();
 export const REMOVE_TODO = 'removeTodo';
 export const LOGIN = 'login';
 export const LOGOUT = 'logout';

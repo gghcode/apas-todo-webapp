@@ -1,18 +1,16 @@
 <template>
   <div>
     <div class="input-todo">
-      <form v-on:submit="onSubmit">
+      <form v-on:submit.prevent="onSubmit(title, contents);">
         <input v-model="title" placeholder="todo title" />
         <input v-model="contents" placeholder="todo contents..." />
         <button type="submit">Create</button>
       </form>
     </div>
-
-    <button v-on:click="onLogout">Logout</button>
     <ul class="todos">
-      <li v-for="todo of todos" :key="todo.id">
+      <li class="col-md-6" v-for="todo of todos" :key="todo.id">
         {{ todo.title }} / {{ todo.contents }}
-        <button>Remove</button>
+        <button v-on:click="onRemoveTodo(todo.id);">Remove</button>
       </li>
     </ul>
   </div>
@@ -20,7 +18,13 @@
 <script>
 import { PURGE_AUTH } from '@/store/mutations.type';
 import JwtService from '@/service/jwt.service';
-import { FETCH_PROFILE, FETCH_TODOS, LOGOUT } from '../store/actions.type';
+import {
+  ADD_TODO,
+  FETCH_PROFILE,
+  FETCH_TODOS,
+  LOGOUT,
+  REMOVE_TODO,
+} from '../store/actions.type';
 import { mapState } from 'vuex';
 
 const initialState = {
@@ -36,19 +40,20 @@ export default {
     todos() {
       return this.$store.state.todo.todos;
     },
-  }, // mapState(['todos']),
-  // mounted() {
-  //   // this.$store.dispatch(FETCH_PROFILE);
-  //   // this.$store.dispatch(FETCH_TODOS);
-  // },
+  },
+  mounted() {
+    this.$store.dispatch(FETCH_TODOS);
+  },
   methods: {
-    onSubmit(e) {
-      console.log(this.title);
-    },
-    onLogout(e) {
+    onSubmit(title, contents) {
       this.$store
-        .dispatch(LOGOUT)
-        .then(() => this.$router.push({ name: 'login' }));
+        .dispatch(ADD_TODO, { title, contents })
+        .then(() => this.$store.dispatch(FETCH_TODOS));
+    },
+    onRemoveTodo(todoId) {
+      this.$store
+        .dispatch(REMOVE_TODO, { id: todoId })
+        .then(() => this.$store.dispatch(FETCH_TODOS));
     },
   },
 };
