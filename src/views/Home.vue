@@ -9,8 +9,7 @@
     </div>
     <ul class="todos">
       <li class="col-md-6" v-for="todo of todos" :key="todo.id">
-        {{ todo.title }} / {{ todo.contents }}
-        <button v-on:click="onRemoveTodo(todo.id);">Remove</button>
+        <TodoListItem :item="todo"></TodoListItem>
       </li>
     </ul>
   </div>
@@ -23,9 +22,9 @@ import {
   FETCH_PROFILE,
   FETCH_TODOS,
   LOGOUT,
-  REMOVE_TODO,
-} from '../store/actions.type';
+} from '@/store/actions.type';
 import { mapState } from 'vuex';
+import TodoListItem from '@/components/TodoListItem';
 
 const initialState = {
   title: '',
@@ -49,12 +48,13 @@ export default {
       this.$store
         .dispatch(ADD_TODO, { title, contents })
         .then(() => this.$store.dispatch(FETCH_TODOS));
+
+      this.title = '';
+      this.contents = '';
     },
-    onRemoveTodo(todoId) {
-      this.$store
-        .dispatch(REMOVE_TODO, { id: todoId })
-        .then(() => this.$store.dispatch(FETCH_TODOS));
-    },
+  },
+  components: {
+    TodoListItem,
   },
 };
 </script>
