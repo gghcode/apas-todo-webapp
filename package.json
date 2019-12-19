@@ -16,7 +16,7 @@
     "typescript": "^3.7.3"
   },
   "scripts": {
-    "dev": "webpack-dev-server --mode development --host 0.0.0.0",
+    "dev": "webpack-dev-server --mode development",
     "start": "react-scripts start",
     "build": "webpack --mode production",
     "test": "react-scripts test",
