@@ -5,6 +5,9 @@ module.exports = {
   entry: path.join(__dirname, 'src', 'index.tsx'),
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+    },
   },
   output: {
     path: path.join(__dirname, 'dist'),
