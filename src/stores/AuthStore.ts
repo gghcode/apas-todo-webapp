@@ -1,18 +1,21 @@
-import AuthService from '@/gateways/AuthGateway';
 import {
   AuthInteractor,
   LoginResult,
   TokenStorage,
+  AuthGateway,
 } from '@/domain/auth/interactor';
 
 export class AuthStore implements AuthInteractor {
-  constructor(readonly tokenStorage: TokenStorage) {}
+  constructor(
+    readonly authGateway: AuthGateway,
+    readonly tokenStorage: TokenStorage
+  ) {}
 
   async login(req: {
     username: string;
     password: string;
   }): Promise<LoginResult> {
-    const res = await AuthService.login(req);
+    const res = await this.authGateway.login(req);
     if (res.error) {
       return { error: res.error };
     }

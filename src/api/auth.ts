@@ -1,14 +1,13 @@
 import { AuthGateway, TaskResult } from '@/domain/auth/interactor';
 import { Token } from '@/domain/auth/dto';
+import { BACKEND_URL } from './constants';
 
-const BACKEND_URL = 'https://apas-todo-api.azurewebsites.net/api/auth/token';
-
-class AuthService implements AuthGateway {
+export class AuthService implements AuthGateway {
   async login(req: {
     username: string;
     password: string;
   }): Promise<TaskResult<Token>> {
-    const res = await fetch(BACKEND_URL, {
+    const res = await fetch(BACKEND_URL + '/api/auth/token', {
       method: 'POST',
       body: JSON.stringify(req),
     });

@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import './Login.css';
 import { useStore } from '@/stores';
+import { RouteComponentProps } from 'react-router-dom';
 
-export const Login: React.FC = () => {
+interface Props extends RouteComponentProps<any> {}
+
+export const Login: React.FC<Props> = (props) => {
   const [form, setForm] = useState({
     username: '',
     password: '',
@@ -17,6 +20,7 @@ export const Login: React.FC = () => {
     });
   };
 
+  const { history } = props;
   const { authStore } = useStore();
   const handleLoginFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,7 +37,12 @@ export const Login: React.FC = () => {
     }
 
     const res = await authStore.login({ username, password });
-    console.log(res);
+    if (res.error) {
+      alert(res.error.error.message);
+      return;
+    }
+
+    history.push('/');
   };
 
   return (
