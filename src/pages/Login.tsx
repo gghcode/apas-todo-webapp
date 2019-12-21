@@ -1,19 +1,38 @@
 import React, { useState } from 'react';
+import { AuthUsecaseInteractor } from '@/stores/AuthStore';
 import './Login.css';
 
-export const Login: React.FC = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+interface Props {
+  authStore: AuthUsecaseInteractor;
+}
 
-  const onLoginFormSubmit = (e: React.FormEvent) => {
+export const Login: React.FC<Props> = (props: Props) => {
+  const [form, setForm] = useState({
+    username: '',
+    password: '',
+  });
+
+  const handleChangedForm = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    setForm({
+      ...form,
+      [name]: value,
+    });
+  };
+
+  const { authStore } = props;
+  const handleLoginFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
+    const { username, password } = form;
     if (username === '') {
       alert('username is required');
     }
 
     if (password === '') {
     }
+
     console.log(username, password);
   };
 
@@ -21,19 +40,21 @@ export const Login: React.FC = () => {
     <div className="login-page">
       <div className="login-form">
         <h2 className="app-title-h2">APAS TODO</h2>
-        <form onSubmit={onLoginFormSubmit}>
+        <form onSubmit={handleLoginFormSubmit}>
           <div className="form-group">
             <input
-              placeholder="Please input username"
-              onChange={(e) => setUsername(e.target.value)}
+              name="username"
+              placeholder="Username"
+              onChange={handleChangedForm}
               className="input-login-form form-control"
             />
           </div>
           <div className="form-group">
             <input
+              name="password"
               type="password"
-              placeholder="Please input password"
-              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
+              onChange={handleChangedForm}
               className="input-login-form form-control"
             />
           </div>
