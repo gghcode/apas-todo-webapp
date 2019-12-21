@@ -38,7 +38,7 @@ export const Login: React.FC<Props> = (props) => {
 
     const res = await authStore.login({ username, password });
     if (res.error) {
-      alert(res.error.error.message);
+      alert(res.error.message);
       return;
     }
 

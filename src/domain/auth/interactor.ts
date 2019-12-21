@@ -1,9 +1,5 @@
 import { Token } from './dto';
-
-export interface TaskResult<T> {
-  readonly data?: T;
-  readonly error?: any;
-}
+import { TaskResult } from '@/domain/dto';
 
 export interface AuthInteractor {
   login(req: { username: string; password: string }): Promise<LoginResult>;

@@ -1,6 +1,7 @@
-import { AuthGateway, TaskResult } from '@/domain/auth/interactor';
+import { AuthGateway } from '@/domain/auth/interactor';
 import { Token } from '@/domain/auth/dto';
 import { BACKEND_URL } from './constants';
+import { TaskResult } from '@/domain/dto';
 
 export class AuthService implements AuthGateway {
   async login(req: {
@@ -25,7 +26,7 @@ export class AuthService implements AuthGateway {
     }
 
     return {
-      error: json,
+      error: json.error,
     };
   }
 }

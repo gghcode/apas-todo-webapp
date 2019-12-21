@@ -23,6 +23,7 @@ const createStore = () => {
   const store = new RootStore();
   return {
     authStore: store.authStore,
+    userStore: store.userStore,
   };
 };
 
