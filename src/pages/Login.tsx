@@ -22,18 +22,20 @@ export const Login: React.FC<Props> = (props: Props) => {
   };
 
   const { authStore } = props;
-  const handleLoginFormSubmit = (e: React.FormEvent) => {
+  const handleLoginFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const { username, password } = form;
     if (username === '') {
       alert('username is required');
+      return;
     }
 
     if (password === '') {
+      return;
     }
 
-    console.log(username, password);
+    authStore.login();
   };
 
   return (
