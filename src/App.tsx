@@ -12,10 +12,7 @@ const App: React.FC = () => {
       <Router>
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route
-            path="/login"
-            component={inject('authStore')(observer(Login))}
-          />
+          <Route path="/login" component={observer(Login)} />
         </Switch>
       </Router>
     </div>

@@ -1,7 +1,7 @@
-import { AuthStore, AuthUsecaseInteractor } from '@/stores/AuthStore';
+import { AuthStore } from '@/stores/AuthStore';
+import { AuthInteractor } from '@/domain/auth/interactor';
+import { WebLocalStorage } from '@/infrastructures/WebLocalStorage';
 
 export default class RootStore {
-  static instance: RootStore;
-
-  authStore: AuthUsecaseInteractor = new AuthStore();
+  authStore: AuthInteractor = new AuthStore(new WebLocalStorage());
 }

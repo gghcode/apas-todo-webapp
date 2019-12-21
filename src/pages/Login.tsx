@@ -1,12 +1,8 @@
 import React, { useState } from 'react';
-import { AuthUsecaseInteractor } from '@/stores/AuthStore';
 import './Login.css';
+import { useStore } from '@/stores';
 
-interface Props {
-  authStore: AuthUsecaseInteractor;
-}
-
-export const Login: React.FC<Props> = (props: Props) => {
+export const Login: React.FC = () => {
   const [form, setForm] = useState({
     username: '',
     password: '',
@@ -21,7 +17,7 @@ export const Login: React.FC<Props> = (props: Props) => {
     });
   };
 
-  const { authStore } = props;
+  const { authStore } = useStore();
   const handleLoginFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -32,10 +28,12 @@ export const Login: React.FC<Props> = (props: Props) => {
     }
 
     if (password === '') {
+      alert('password is required');
       return;
     }
 
-    authStore.login();
+    const res = await authStore.login({ username, password });
+    console.log(res);
   };
 
   return (

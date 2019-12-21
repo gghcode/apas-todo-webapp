@@ -1,11 +1,26 @@
-import { observable } from 'mobx';
+import AuthService from '@/gateways/AuthGateway';
+import {
+  AuthInteractor,
+  LoginResult,
+  TokenStorage,
+} from '@/domain/auth/interactor';
 
-export interface AuthUsecaseInteractor {
-  login(): void;
-}
+export class AuthStore implements AuthInteractor {
+  constructor(readonly tokenStorage: TokenStorage) {}
 
-export class AuthStore implements AuthUsecaseInteractor {
-  login(): void {
-    console.log('hello');
+  async login(req: {
+    username: string;
+    password: string;
+  }): Promise<LoginResult> {
+    const res = await AuthService.login(req);
+    if (res.error) {
+      return { error: res.error };
+    }
+
+    this.tokenStorage.saveToken(res.data!.accessToken);
+
+    return {
+      token: res.data,
+    };
   }
 }
