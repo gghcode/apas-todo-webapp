@@ -5,30 +5,17 @@ import { toast } from 'react-toastify';
 import './Login.css';
 import 'react-toastify/dist/ReactToastify.css';
 
-interface Props extends RouteComponentProps<any> {}
+interface Props extends RouteComponentProps {}
 
 export const Login: React.FC<Props> = (props) => {
-  const [form, setForm] = useState({
-    username: '',
-    password: '',
-  });
-
-  const handleChangedForm = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-
-    setForm({
-      ...form,
-      [name]: value,
-    });
-  };
-
-  const { history } = props;
+  const loginForm = useForm();
   const { authStore } = useStore();
+  const { history } = props;
 
   const handleLoginFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const { username, password } = form;
+    const { username, password } = loginForm.form;
     if (username === '') {
       toast('username is required', {
         autoClose: 1000,
@@ -67,7 +54,7 @@ export const Login: React.FC<Props> = (props) => {
             <input
               name="username"
               placeholder="Username"
-              onChange={handleChangedForm}
+              onChange={loginForm.handleChanged}
               className="input-login-form form-control"
             />
           </div>
@@ -76,7 +63,7 @@ export const Login: React.FC<Props> = (props) => {
               name="password"
               type="password"
               placeholder="Password"
-              onChange={handleChangedForm}
+              onChange={loginForm.handleChanged}
               className="input-login-form form-control"
             />
           </div>
@@ -88,4 +75,23 @@ export const Login: React.FC<Props> = (props) => {
       </div>
     </div>
   );
+};
+
+const useForm = () => {
+  const [form, setForm] = useState({
+    username: '',
+    password: '',
+  });
+
+  return {
+    form,
+    handleChanged: (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { name, value } = e.target;
+
+      setForm({
+        ...form,
+        [name]: value,
+      });
+    },
+  };
 };
