@@ -3,7 +3,7 @@ import { Token } from '@/domain/auth/dto';
 import { BACKEND_URL } from './constants';
 import { TaskResult } from '@/domain/dto';
 
-export class AuthService implements AuthGateway {
+export class AuthApi implements AuthGateway {
   async login(req: {
     username: string;
     password: string;
@@ -31,4 +31,4 @@ export class AuthService implements AuthGateway {
   }
 }
 
-export default new AuthService();
+export default new AuthApi();

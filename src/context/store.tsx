@@ -2,7 +2,7 @@ import React from 'react';
 import { useLocalStore } from 'mobx-react';
 import { AuthStore } from '@/stores/AuthStore';
 import { WebLocalStorage } from '@/infrastructures/WebLocalStorage';
-import { AuthService } from '@/api/auth';
+import { AuthApi } from '@/api/auth';
 import { UserStore } from '@/stores/UserStore';
 import { UserApi } from '@/api/user';
 import { AuthInteractor, TokenStorage } from '@/domain/auth/interactor';
@@ -26,11 +26,7 @@ export const useStore = () => {
 const storeContext = React.createContext<TStore | null>(null);
 const createStore = () => {
   const localStorage: TokenStorage = new WebLocalStorage();
-  const authStore: AuthInteractor = new AuthStore(
-    new AuthService(),
-    localStorage
-  );
-
+  const authStore: AuthInteractor = new AuthStore(new AuthApi(), localStorage);
   const userStore: UserInteractor = new UserStore(new UserApi(), localStorage);
 
   return {
