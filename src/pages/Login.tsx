@@ -51,6 +51,10 @@ export const Login: React.FC<Props> = (props) => {
       return;
     }
 
+    toast('hi!', {
+      autoClose: 1000,
+    });
+
     history.push('/');
   };
 
