@@ -86,11 +86,9 @@ const useForm = () => {
   return {
     form,
     handleChanged: (e: React.ChangeEvent<HTMLInputElement>) => {
-      const { name, value } = e.target;
-
       setForm({
         ...form,
-        [name]: value,
+        [e.target.name]: e.target.value,
       });
     },
   };
