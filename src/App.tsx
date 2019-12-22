@@ -3,15 +3,21 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Home } from '@/pages/Home';
 import { Login } from '@/pages/Login';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { inject } from 'mobx-react';
 import { observer } from 'mobx-react-lite';
+import { PrivateRoute } from '@/components/auth';
+import { useStore } from './context/store';
 
 const App: React.FC = () => {
   return (
     <div>
       <Router>
         <Switch>
-          <Route exact path="/" component={Home} />
+          <PrivateRoute
+            exact
+            path="/"
+            auth={useStore().authStore}
+            component={Home}
+          />
           <Route path="/login" component={observer(Login)} />
         </Switch>
       </Router>

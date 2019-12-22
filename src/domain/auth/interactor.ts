@@ -2,6 +2,7 @@ import { Token } from './dto';
 import { TaskResult } from '@/domain/dto';
 
 export interface AuthInteractor {
+  isAuthenticated(): boolean;
   login(req: { username: string; password: string }): Promise<LoginResult>;
 }
 
