@@ -1,7 +1,8 @@
 import { TaskResult } from '../dto';
 
 export interface TodoInteractor {
-  todos(): Promise<TodoResult>;
+  fetchTodoCategories(): Promise<TodoCategory[]>;
+  fetchTodos(): Promise<Todo[]>;
 }
 
 export interface TodoGateway {
@@ -9,4 +10,4 @@ export interface TodoGateway {
 }
 
 export interface Todo {}
-export interface TodoResult {}
+export interface TodoCategory {}

@@ -1,14 +1,26 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useStore } from '@/context/store';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { MasterDetail } from '@/components/MasterDetail';
+import { TodosDetail } from '@/pages/Detail/TodosDetail';
+import { TodoCategoryMaster } from '@/pages/Master/TodoCategoryMaster';
+import './Home.css';
+import { TodoCategory } from '@/domain/todo/interactor';
 
 export const Home: React.FC = () => {
+  const [categories, setCategories] = useState([] as TodoCategory[]);
+  const [category, setCategory] = useState();
+
   const { userStore, todoStore } = useStore();
 
   useEffect(() => {
-    todoStore.todos();
+    todoStore
+      .fetchTodoCategories()
+      .then((categories: TodoCategory[]) => setCategories(categories));
   }, []);
+
+  useEffect(() => {
+    todoStore.fetchTodos();
+  }, category);
 
   useEffect(() => {
     const res = userStore.me().then((a) => console.log(a));
@@ -17,7 +29,12 @@ export const Home: React.FC = () => {
 
   return (
     <div>
-      <p>Hello</p>
+      <MasterDetail
+        MasterType={TodoCategoryMaster}
+        masterProps={{ categories: categories }}
+        DetailType={TodosDetail}
+        detailProps={{}}
+      />
     </div>
   );
 };

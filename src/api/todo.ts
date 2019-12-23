@@ -14,7 +14,7 @@ export class TodoApi implements TodoGateway {
     const json = await res.json();
     if (res.status === 200) {
       return {
-        data: [],
+        data: json,
       };
     }
 
