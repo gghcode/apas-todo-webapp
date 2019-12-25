@@ -2,10 +2,14 @@ import React from 'react';
 import { useLocalStore } from 'mobx-react';
 import { LocalStorage } from '@/infrastructures/localStorage';
 import { UserStore, AuthStore, TodoStore } from '@/stores';
-import { KeyValueStorage } from '@/domain/persist/storage';
 import { ApiAgent } from '@/infrastructures/agent';
 import { NativeAgent } from '@/infrastructures/nativeAgent';
-import { AuthInteractor, UserInteractor, TodoInteractor } from '@/domain';
+import {
+  AuthInteractor,
+  UserInteractor,
+  TodoInteractor,
+  KeyValueStorage,
+} from '@/domain';
 import { AuthApi, UserApi, TodoApi } from '@/api';
 
 export const StoreProvider: React.FC = ({ children }) => {
