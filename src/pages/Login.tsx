@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useStore } from '@/context/store';
 import { RouteComponentProps } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -10,6 +10,13 @@ export const Login: React.FC<Props> = (props) => {
   const loginForm = useForm();
   const { authStore } = useStore();
   const { history } = props;
+
+  useEffect(() => {
+    console.log('hello', authStore.authenticated);
+    if (authStore.authenticated) {
+      history.push('/');
+    }
+  }, []);
 
   const handleLoginFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

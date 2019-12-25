@@ -7,7 +7,6 @@ export class AuthApi implements AuthGateway {
 
   async login(req: { username: string; password: string }): Promise<Token> {
     const res = await this.agent.post('/api/auth/token', {
-      method: 'POST',
       body: req,
     });
 

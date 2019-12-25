@@ -8,7 +8,7 @@ export class NativeAgent implements ApiAgent {
 
   post(url: string, req: Request): Promise<any> {
     return fetch(baseUrl + url, {
-      method: req.method,
+      method: 'POST',
       headers: {
         Authorization: `Bearer ${this.tokenContainer.get()}`,
       },
@@ -16,7 +16,14 @@ export class NativeAgent implements ApiAgent {
     });
   }
 
-  async get(url: string): Promise<any> {}
+  async get(url: string): Promise<any> {
+    return fetch(baseUrl + url, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${this.tokenContainer.get()}`,
+      },
+    });
+  }
 
   async put(url: string): Promise<any> {}
 

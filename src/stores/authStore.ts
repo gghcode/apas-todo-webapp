@@ -6,19 +6,26 @@ import {
 import { KeyValueStorage } from '@/domain/persist/storage';
 import { Token } from '@/domain/auth/dto';
 import { Result } from '@/domain/dto';
+import { observable } from 'mobx';
 
 const _accessTokenKey = 'access_token_key';
 const _refreshTokenKey = 'refresh_token_key';
 
 export class AuthStore implements AuthInteractor {
+  @observable
+  authenticated: boolean;
+
   constructor(
     readonly tokenContainer: TokenContainer,
     readonly authGateway: AuthGateway,
     readonly keyValueStorage: KeyValueStorage
-  ) {}
+  ) {
+    const token = this.keyValueStorage.get(_accessTokenKey);
 
-  isAuthenticated(): boolean {
-    return this.tokenContainer.get() !== '';
+    this.authenticated = token != null;
+    if (this.authenticated) {
+      tokenContainer.set(token!);
+    }
   }
 
   async login(req: {
@@ -36,6 +43,7 @@ export class AuthStore implements AuthInteractor {
     this.keyValueStorage.set(_accessTokenKey, token.accessToken);
     this.keyValueStorage.set(_refreshTokenKey, token.refreshToken);
     this.tokenContainer.set(token.accessToken);
+    this.authenticated = true;
 
     return [token, undefined];
   }

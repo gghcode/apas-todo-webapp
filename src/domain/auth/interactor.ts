@@ -14,7 +14,8 @@ export class TokenContainer {
 }
 
 export interface AuthInteractor {
-  isAuthenticated(): boolean;
+  authenticated: boolean;
+
   login(req: {
     username: string;
     password: string;

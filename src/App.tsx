@@ -1,13 +1,18 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from 'react-router-dom';
 import { Home } from '@/pages/Home';
 import { Login } from '@/pages/Login';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { observer } from 'mobx-react-lite';
-import { PrivateRoute } from '@/components/auth';
-import { useStore } from './context/store';
+import { useStore } from '@/context/store';
 
 const App: React.FC = () => {
+  const { authStore } = useStore();
+
   return (
     <div>
       <Router>
@@ -15,7 +20,7 @@ const App: React.FC = () => {
           <PrivateRoute
             exact
             path="/"
-            auth={useStore().authStore}
+            authenticated={authStore.authenticated}
             component={observer(Home)}
           />
           <Route path="/login" component={observer(Login)} />
@@ -25,4 +30,19 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+const PrivateRoute = ({
+  component: Component,
+  authenticated,
+  ...rest
+}: any) => {
+  return (
+    <Route
+      {...rest}
+      render={(props) =>
+        authenticated ? <Component {...props} /> : <Redirect to="/login" />
+      }
+    />
+  );
+};
+
+export default observer(App);
