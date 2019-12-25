@@ -11,6 +11,7 @@ import {
   KeyValueStorage,
 } from '@/domain';
 import { AuthApi, UserApi, TodoApi } from '@/api';
+import { TokenContainer } from '@/domain/auth/interactor';
 
 export const StoreProvider: React.FC = ({ children }) => {
   const store = useLocalStore(createStore);
@@ -29,15 +30,17 @@ export const useStore = () => {
 
 const storeContext = React.createContext<TStore | null>(null);
 const createStore = () => {
-  const agent: ApiAgent = new NativeAgent();
+  const tokenContainer = new TokenContainer();
+  const agent: ApiAgent = new NativeAgent(tokenContainer);
 
   const localStorage: KeyValueStorage = new LocalStorage();
   const authStore: AuthInteractor = new AuthStore(
+    tokenContainer,
     new AuthApi(agent),
     localStorage
   );
-  const userStore: UserInteractor = new UserStore(new UserApi());
-  const todoStore: TodoInteractor = new TodoStore(new TodoApi());
+  const userStore: UserInteractor = new UserStore(new UserApi(agent));
+  const todoStore: TodoInteractor = new TodoStore(new TodoApi(agent));
 
   return {
     authStore,

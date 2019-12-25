@@ -1,5 +1,17 @@
 import { Token } from './dto';
-import { TaskResult, Result } from '@/domain/dto';
+import { Result } from '@/domain/dto';
+
+export class TokenContainer {
+  accessToken: string = '';
+
+  set(accessToken: string): void {
+    this.accessToken = accessToken;
+  }
+
+  get(): string {
+    return this.accessToken;
+  }
+}
 
 export interface AuthInteractor {
   isAuthenticated(): boolean;

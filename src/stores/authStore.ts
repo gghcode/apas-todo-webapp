@@ -1,4 +1,8 @@
-import { AuthInteractor, AuthGateway } from '@/domain/auth/interactor';
+import {
+  AuthInteractor,
+  AuthGateway,
+  TokenContainer,
+} from '@/domain/auth/interactor';
 import { KeyValueStorage } from '@/domain/persist/storage';
 import { Token } from '@/domain/auth/dto';
 import { Result } from '@/domain/dto';
@@ -8,17 +12,13 @@ const _refreshTokenKey = 'refresh_token_key';
 
 export class AuthStore implements AuthInteractor {
   constructor(
+    readonly tokenContainer: TokenContainer,
     readonly authGateway: AuthGateway,
     readonly keyValueStorage: KeyValueStorage
   ) {}
 
   isAuthenticated(): boolean {
-    return false;
-    // const token = this.keyValueStorage.getToken();
-    // if (token == null) {
-    //   return false;
-    // }
-    // return token != null;
+    return this.tokenContainer.get() !== '';
   }
 
   async login(req: {
@@ -35,6 +35,7 @@ export class AuthStore implements AuthInteractor {
 
     this.keyValueStorage.set(_accessTokenKey, token.accessToken);
     this.keyValueStorage.set(_refreshTokenKey, token.refreshToken);
+    this.tokenContainer.set(token.accessToken);
 
     return [token, undefined];
   }

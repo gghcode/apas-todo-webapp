@@ -1,25 +1,18 @@
 import { UserGateway } from '@/domain/user/interactor';
-import { TaskResult } from '@/domain/dto';
 import { User } from '@/domain/user/dto';
-import { BACKEND_URL } from './constants';
+import { ApiAgent } from '@/infrastructures/agent';
 
 export class UserApi implements UserGateway {
-  async me(): Promise<TaskResult<User>> {
-    const res = await fetch(BACKEND_URL + '/api/user', {
-      headers: {
-        // Authorization: `Bearer ${accessToken}`,
-      },
-    });
+  constructor(readonly agent: ApiAgent) {}
+
+  async me(): Promise<User> {
+    const res = await this.agent.get('/api/user');
 
     const json = await res.json();
-    if (res.status === 200) {
-      return {
-        data: json,
-      };
+    if (!res.ok) {
+      throw new Error(json);
     }
 
-    return {
-      error: json.error,
-    };
+    return json;
   }
 }

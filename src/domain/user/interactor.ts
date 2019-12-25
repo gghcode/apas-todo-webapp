@@ -1,12 +1,12 @@
-import { TaskResult } from '@/domain/dto';
 import { User } from './dto';
+import { Result } from '@/domain';
 
 export interface UserInteractor {
-  me(): Promise<UserResult>;
+  me(): Promise<Result<UserResult, Error>>;
 }
 
 export interface UserGateway {
-  me(): Promise<TaskResult<User>>;
+  me(): Promise<User>;
 }
 
 export interface UserResult {

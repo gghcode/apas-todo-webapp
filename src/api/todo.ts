@@ -1,25 +1,17 @@
 import { TodoGateway, Todo } from '@/domain/todo/interactor';
-import { BACKEND_URL } from './constants';
-import { TaskResult } from '@/domain/dto';
+import { ApiAgent } from '@/infrastructures/agent';
 
 export class TodoApi implements TodoGateway {
-  async todos(): Promise<TaskResult<Todo[]>> {
-    const res = await fetch(BACKEND_URL + '/api/todos', {
-      method: 'GET',
-      headers: {
-        // Authorization: `Bearer ${accessToken}`,
-      },
-    });
+  constructor(readonly agent: ApiAgent) {}
+
+  async todos(): Promise<Todo[]> {
+    const res = await this.agent.get('/api/todos');
 
     const json = await res.json();
-    if (res.status === 200) {
-      return {
-        data: json,
-      };
+    if (!res.ok) {
+      throw new Error(json);
     }
 
-    return {
-      error: json.error,
-    };
+    return json;
   }
 }

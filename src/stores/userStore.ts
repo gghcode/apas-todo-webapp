@@ -3,18 +3,21 @@ import {
   UserGateway,
   UserResult,
 } from '@/domain/user/interactor';
+import { Result } from '@/domain';
+import { User } from '@/domain/user/dto';
 
 export class UserStore implements UserInteractor {
-  constructor(
-    readonly userGateway: UserGateway,
-  ) {}
+  constructor(readonly userGateway: UserGateway) {}
 
-  async me(): Promise<UserResult> {
-    const res = await this.userGateway.me();
-    if (res.error) {
-      return { id: 0, username: '' };
+  async me(): Promise<Result<UserResult, Error>> {
+    let user: User;
+
+    try {
+      user = await this.userGateway.me();
+    } catch (err) {
+      return [undefined, err];
     }
 
-    return res.data!;
+    return [user, undefined];
   }
 }

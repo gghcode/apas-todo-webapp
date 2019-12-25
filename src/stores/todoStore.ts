@@ -5,6 +5,7 @@ import {
   TodoCategory,
 } from '@/domain/todo/interactor';
 import { observable } from 'mobx';
+import { Result } from '@/domain';
 
 export class TodoStore implements TodoInteractor {
   @observable
@@ -12,23 +13,29 @@ export class TodoStore implements TodoInteractor {
 
   constructor(readonly todoGateway: TodoGateway) {}
 
-  async fetchTodoCategories(): Promise<TodoCategory[]> {
+  async fetchTodoCategories(): Promise<Result<TodoCategory[], Error>> {
     return [
-      {
-        name: 'ab',
-      },
-      {
-        name: 'bcd',
-      },
+      [
+        {
+          name: 'ab',
+        },
+        {
+          name: 'bcd',
+        },
+      ],
+      undefined,
     ];
   }
 
-  async fetchTodos(): Promise<Todo[]> {
-    const res = await this.todoGateway.todos();
-    if (!res.error && res.data) {
-      this.todos = res.data;
+  async fetchTodos(): Promise<Result<Todo[], Error>> {
+    let todos: Todo[];
+
+    try {
+      todos = await this.todoGateway.todos();
+    } catch (err) {
+      return [undefined, err];
     }
 
-    return [];
+    return [todos, undefined];
   }
 }
