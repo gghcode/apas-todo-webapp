@@ -10,11 +10,6 @@ export class AuthApi implements AuthGateway {
       method: 'POST',
       body: req,
     });
-    console.log(res);
-    // const res = await fetch(BACKEND_URL + '/api/auth/token', {
-    //   method: 'POST',
-    //   body: JSON.stringify(req),
-    // });
 
     const json = await res.json();
     if (res.status !== 200) {

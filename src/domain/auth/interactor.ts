@@ -12,8 +12,3 @@ export interface AuthInteractor {
 export interface AuthGateway {
   login(req: { username: string; password: string }): Promise<Token>;
 }
-
-export interface LoginResult {
-  readonly token?: Token;
-  readonly error?: any;
-}
