@@ -3,11 +3,11 @@ import { BACKEND_URL } from './constants';
 import { TaskResult } from '@/domain/dto';
 
 export class TodoApi implements TodoGateway {
-  async todos(accessToken: string): Promise<TaskResult<Todo[]>> {
+  async todos(): Promise<TaskResult<Todo[]>> {
     const res = await fetch(BACKEND_URL + '/api/todos', {
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${accessToken}`,
+        // Authorization: `Bearer ${accessToken}`,
       },
     });
 

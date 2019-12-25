@@ -4,10 +4,10 @@ import { User } from '@/domain/user/dto';
 import { BACKEND_URL } from './constants';
 
 export class UserApi implements UserGateway {
-  async me(accessToken: string): Promise<TaskResult<User>> {
+  async me(): Promise<TaskResult<User>> {
     const res = await fetch(BACKEND_URL + '/api/user', {
       headers: {
-        Authorization: `Bearer ${accessToken}`,
+        // Authorization: `Bearer ${accessToken}`,
       },
     });
 

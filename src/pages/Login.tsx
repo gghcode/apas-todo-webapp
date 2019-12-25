@@ -3,7 +3,6 @@ import { useStore } from '@/context/store';
 import { RouteComponentProps } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import './Login.css';
-import 'react-toastify/dist/ReactToastify.css';
 
 interface Props extends RouteComponentProps {}
 
@@ -17,30 +16,22 @@ export const Login: React.FC<Props> = (props) => {
 
     const { username, password } = loginForm.form;
     if (username === '') {
-      toast('username is required', {
-        autoClose: 1000,
-      });
+      showMessage('username is required');
       return;
     }
 
     if (password === '') {
-      toast('password is required', {
-        autoClose: 1000,
-      });
+      showMessage('password is required');
       return;
     }
 
-    const res = await authStore.login({ username, password });
-    if (res.error) {
-      toast(res.error.message, {
-        autoClose: 1000,
-      });
+    const [_, err] = await authStore.login({ username, password });
+    if (err != undefined) {
+      showMessage(err.message);
       return;
     }
 
-    toast('hi!', {
-      autoClose: 1000,
-    });
+    showMessage('hi');
 
     history.push('/');
   };
@@ -92,4 +83,8 @@ const useForm = () => {
       });
     },
   };
+};
+
+const showMessage = (msg: string) => {
+  toast(msg, { autoClose: 1000 });
 };

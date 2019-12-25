@@ -4,33 +4,30 @@ import {
   Todo,
   TodoCategory,
 } from '@/domain/todo/interactor';
-import { TokenStorage } from '@/domain/auth/interactor';
 import { observable } from 'mobx';
 
 export class TodoStore implements TodoInteractor {
   @observable
   todos: Todo[] = [];
 
-  constructor(
-    readonly todoGateway: TodoGateway,
-    readonly tokenStorage: TokenStorage
-  ) {}
+  constructor(readonly todoGateway: TodoGateway) {}
 
   async fetchTodoCategories(): Promise<TodoCategory[]> {
-    return ['abc', 'dbd', 'fda'];
+    return [
+      {
+        name: 'ab',
+      },
+      {
+        name: 'bcd',
+      },
+    ];
   }
 
   async fetchTodos(): Promise<Todo[]> {
-    const accessToken = this.tokenStorage.getToken();
-    if (accessToken === null) {
-      return [];
-    }
-
-    const res = await this.todoGateway.todos(accessToken);
+    const res = await this.todoGateway.todos();
     if (!res.error && res.data) {
       this.todos = res.data;
     }
-    console.log(res);
 
     return [];
   }

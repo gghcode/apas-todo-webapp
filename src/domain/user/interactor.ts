@@ -6,7 +6,7 @@ export interface UserInteractor {
 }
 
 export interface UserGateway {
-  me(accessToken: string): Promise<TaskResult<User>>;
+  me(): Promise<TaskResult<User>>;
 }
 
 export interface UserResult {

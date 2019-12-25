@@ -1,15 +1,18 @@
 import React from 'react';
 import { useLocalStore } from 'mobx-react';
 import { AuthStore } from '@/stores/AuthStore';
-import { WebLocalStorage } from '@/infrastructures/WebLocalStorage';
+import { LocalStorage } from '@/infrastructures/localStorage';
 import { AuthApi } from '@/api/auth';
 import { UserStore } from '@/stores/UserStore';
 import { UserApi } from '@/api/user';
-import { AuthInteractor, TokenStorage } from '@/domain/auth/interactor';
+import { AuthInteractor } from '@/domain/auth/interactor';
 import { UserInteractor } from '@/domain/user/interactor';
 import { TodoInteractor } from '@/domain/todo/interactor';
 import { TodoStore } from '@/stores/TodoStore';
 import { TodoApi } from '@/api/todo';
+import { KeyValueStorage } from '@/domain/persist/storage';
+import { ApiAgent } from '@/infrastructures/agent';
+import { NativeAgent } from '@/infrastructures/nativeAgent';
 
 export const StoreProvider: React.FC = ({ children }) => {
   const store = useLocalStore(createStore);
@@ -28,10 +31,15 @@ export const useStore = () => {
 
 const storeContext = React.createContext<TStore | null>(null);
 const createStore = () => {
-  const localStorage: TokenStorage = new WebLocalStorage();
-  const authStore: AuthInteractor = new AuthStore(new AuthApi(), localStorage);
-  const userStore: UserInteractor = new UserStore(new UserApi(), localStorage);
-  const todoStore: TodoInteractor = new TodoStore(new TodoApi(), localStorage);
+  const agent: ApiAgent = new NativeAgent();
+
+  const localStorage: KeyValueStorage = new LocalStorage();
+  const authStore: AuthInteractor = new AuthStore(
+    new AuthApi(agent),
+    localStorage
+  );
+  const userStore: UserInteractor = new UserStore(new UserApi());
+  const todoStore: TodoInteractor = new TodoStore(new TodoApi());
 
   return {
     authStore,

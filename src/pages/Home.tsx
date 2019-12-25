@@ -19,6 +19,7 @@ export const Home: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    console.log('hello');
     todoStore.fetchTodos();
   }, category);
 
@@ -31,7 +32,10 @@ export const Home: React.FC = () => {
     <div>
       <MasterDetail
         MasterType={TodoCategoryMaster}
-        masterProps={{ categories: categories }}
+        masterProps={{
+          categories: categories,
+          onSelectCategory: (category: TodoCategory) => setCategory(category),
+        }}
         DetailType={TodosDetail}
         detailProps={{}}
       />

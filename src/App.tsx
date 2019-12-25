@@ -13,6 +13,7 @@ const App: React.FC = () => {
       <Router>
         <Switch>
           <PrivateRoute
+            exact
             path="/"
             auth={useStore().authStore}
             component={observer(Home)}

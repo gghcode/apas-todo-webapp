@@ -6,8 +6,10 @@ export interface TodoInteractor {
 }
 
 export interface TodoGateway {
-  todos(accessToken: string): Promise<TaskResult<Todo[]>>;
+  todos(): Promise<TaskResult<Todo[]>>;
 }
 
 export interface Todo {}
-export interface TodoCategory {}
+export interface TodoCategory {
+  readonly name: string;
+}
