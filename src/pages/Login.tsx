@@ -11,13 +11,6 @@ export const Login: React.FC<Props> = (props) => {
   const { authStore } = useStore();
   const { history } = props;
 
-  useEffect(() => {
-    console.log('hello', authStore.authenticated);
-    if (authStore.authenticated) {
-      history.push('/');
-    }
-  }, []);
-
   const handleLoginFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
