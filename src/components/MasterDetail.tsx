@@ -10,19 +10,21 @@ export interface MasterDetailProps {
 }
 
 export const MasterDetail: React.FC<MasterDetailProps> = (props) => {
-  let { path } = useRouteMatch() as any;
+  const { path } = useRouteMatch();
+
   const master = <props.MasterType {...props.masterProps} data-test="Master" />;
   const detail = <props.DetailType {...props.detailProps} data-test="Detail" />;
-
+  const detailPath = 'detail';
+  console.log(path);
   return (
     <Media query="(max-width: 599px)">
-      {(matches: any) =>
+      {(matches: boolean) =>
         matches ? (
           <Switch>
             <Route exact path={`${path}`}>
               {master}
             </Route>
-            <Route path={`${path}/detail/:id`}>{detail}</Route>
+            <Route path={`${path}/${detailPath}/:id`}>{detail}</Route>
           </Switch>
         ) : (
           <section>
@@ -34,7 +36,7 @@ export const MasterDetail: React.FC<MasterDetailProps> = (props) => {
                 <Route exact path={`${path}`}>
                   {detail}
                 </Route>
-                <Route path={`${path}/detail/:id`}>{detail}</Route>
+                <Route path={`${path}/${detailPath}/:id`}>{detail}</Route>
               </Switch>
             </section>
           </section>

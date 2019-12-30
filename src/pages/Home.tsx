@@ -29,10 +29,9 @@ export const Home: React.FC = () => {
   useEffect(() => {
     const res = userStore.me().then((a) => console.log(a));
   }, []);
-  // const res = userStore.me().then((a) => toast(`hi ${a.username}!`));
 
   return (
-    <div>
+    <React.Fragment>
       <MasterDetail
         MasterType={TodoCategoryMaster}
         masterProps={{
@@ -42,6 +41,6 @@ export const Home: React.FC = () => {
         DetailType={TodosDetail}
         detailProps={{}}
       />
-    </div>
+    </React.Fragment>
   );
 };
