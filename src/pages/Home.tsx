@@ -9,7 +9,6 @@ import { TodoCategory } from '@/domain/todo/interactor';
 export const Home: React.FC = () => {
   const [categories, setCategories] = useState([] as TodoCategory[]);
   const [category, setCategory] = useState();
-
   const { userStore, todoStore } = useStore();
 
   useEffect(() => {
@@ -20,27 +19,25 @@ export const Home: React.FC = () => {
     };
 
     asyncFunc();
-  }, []);
+  }, [todoStore]);
 
   useEffect(() => {
     todoStore.fetchTodos();
-  }, category);
+  }, [todoStore]);
 
   useEffect(() => {
     const res = userStore.me().then((a) => console.log(a));
-  }, []);
+  }, [userStore]);
 
   return (
-    <React.Fragment>
-      <MasterDetail
-        MasterType={TodoCategoryMaster}
-        masterProps={{
-          categories: categories,
-          onSelectCategory: (category: TodoCategory) => setCategory(category),
-        }}
-        DetailType={TodosDetail}
-        detailProps={{}}
-      />
-    </React.Fragment>
+    <MasterDetail
+      MasterType={TodoCategoryMaster}
+      masterProps={{
+        categories: categories,
+        onSelectCategory: (category: TodoCategory) => setCategory(category),
+      }}
+      DetailType={TodosDetail}
+      detailProps={{}}
+    />
   );
 };

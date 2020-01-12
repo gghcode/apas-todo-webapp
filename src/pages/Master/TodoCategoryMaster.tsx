@@ -10,10 +10,11 @@ interface Props {
 
 export const TodoCategoryMaster: React.FC<Props> = (props) => {
   const { categories, onSelectCategory } = props;
+
   const categoriesView = categories.map((item: TodoCategory) => (
     <li key={item.name} onClick={(e) => onSelectCategory(item)}>
       <p>Hello</p>
-      <NavLink exact to={`/detail/3`}>
+      <NavLink exact to={`/todos/detail/3`}>
         <p>{item.name}</p>
       </NavLink>
     </li>

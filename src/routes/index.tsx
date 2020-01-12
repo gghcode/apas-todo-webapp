@@ -9,7 +9,7 @@ const Router = (
   <div>
     <BrowserRouter>
       <Switch>
-        <PrivateRoute exact path="/todos" component={observer(Home)} />
+        <PrivateRoute path="/todos" component={observer(Home)} />
         <LoggedInRedirectRoute path="/login" component={observer(Login)} />
         <Redirect exact from="/" to="/todos" />
       </Switch>
