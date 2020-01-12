@@ -1,15 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useStore } from '@/context/store';
-import { RouteComponentProps } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import './Login.css';
 
-interface Props extends RouteComponentProps {}
-
-export const Login: React.FC<Props> = (props) => {
+export const Login: React.FC = () => {
   const loginForm = useForm();
+  const history = useHistory();
   const { authStore } = useStore();
-  const { history } = props;
 
   const handleLoginFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
