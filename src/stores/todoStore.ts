@@ -1,13 +1,8 @@
-import {
-  TodoInteractor,
-  TodoGateway,
-  Todo,
-  TodoCategory,
-} from '@/domain/todo/interactor';
+import { TodoUsecase, TodoGateway, Todo, TodoCategory } from '@/domain/todo';
 import { observable } from 'mobx';
 import { Result } from '@/domain';
 
-export class TodoStore implements TodoInteractor {
+export class TodoStore {
   @observable
   todos: Todo[] = [];
 

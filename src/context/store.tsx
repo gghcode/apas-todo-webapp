@@ -4,14 +4,9 @@ import { LocalStorage } from '@/infrastructures/localStorage';
 import { UserStore, AuthStore, TodoStore } from '@/stores';
 import { ApiAgent } from '@/infrastructures/agent';
 import { NativeAgent } from '@/infrastructures/nativeAgent';
-import {
-  AuthInteractor,
-  UserInteractor,
-  TodoInteractor,
-  KeyValueStorage,
-} from '@/domain';
-import { AuthApi, UserApi, TodoApi } from '@/api';
-import { TokenContainer } from '@/domain/auth/interactor';
+import { AuthInteractor, UserInteractor, KeyValueStorage } from '@/domain';
+import { AuthApi, UserApi, TodoApi } from '@/infrastructures/api';
+import { TokenContainer } from '@/domain/auth/usecase';
 
 export const StoreProvider: React.FC = ({ children }) => {
   const store = useLocalStore(createStore);
@@ -40,7 +35,7 @@ const createStore = () => {
     localStorage
   );
   const userStore: UserInteractor = new UserStore(new UserApi(agent));
-  const todoStore: TodoInteractor = new TodoStore(new TodoApi(agent));
+  const todoStore = new TodoStore(new TodoApi(agent));
 
   return {
     authStore,

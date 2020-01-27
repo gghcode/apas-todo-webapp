@@ -1,17 +1,12 @@
-import {
-  AuthInteractor,
-  AuthGateway,
-  TokenContainer,
-} from '@/domain/auth/interactor';
+import { AuthUsecase, AuthGateway, TokenContainer } from '@/domain/auth';
 import { KeyValueStorage } from '@/domain/persist/storage';
-import { Token } from '@/domain/auth/dto';
-import { Result } from '@/domain/dto';
+import { Token } from '@/domain/auth/entity';
 import { observable } from 'mobx';
 
 const _accessTokenKey = 'access_token_key';
 const _refreshTokenKey = 'refresh_token_key';
 
-export class AuthStore implements AuthInteractor {
+export class AuthStore {
   @observable
   authenticated: boolean;
 

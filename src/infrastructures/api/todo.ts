@@ -1,4 +1,4 @@
-import { TodoGateway, Todo } from '@/domain/todo/interactor';
+import { TodoGateway, Todo } from '@/domain/todo';
 import { ApiAgent } from '@/infrastructures/agent';
 
 export class TodoApi implements TodoGateway {

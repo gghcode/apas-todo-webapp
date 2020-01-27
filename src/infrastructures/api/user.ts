@@ -1,5 +1,5 @@
-import { UserGateway } from '@/domain/user/interactor';
-import { User } from '@/domain/user/dto';
+import { UserGateway } from '@/domain/user';
+import { User } from '@/domain/user/entity';
 import { ApiAgent } from '@/infrastructures/agent';
 
 export class UserApi implements UserGateway {

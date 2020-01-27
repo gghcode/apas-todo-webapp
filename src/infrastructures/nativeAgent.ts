@@ -1,5 +1,5 @@
 import { ApiAgent, Request } from './agent';
-import { TokenContainer } from '@/domain/auth/interactor';
+import { TokenContainer } from '@/domain/auth/usecase';
 
 const baseUrl = 'https://apas-todo-api.azurewebsites.net';
 

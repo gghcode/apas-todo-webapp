@@ -1,5 +1,5 @@
-import { AuthGateway } from '@/domain/auth/interactor';
-import { Token } from '@/domain/auth/dto';
+import { AuthGateway } from '@/domain/auth';
+import { Token } from '@/domain/auth/entity';
 import { ApiAgent } from '@/infrastructures/agent';
 
 export class AuthApi implements AuthGateway {

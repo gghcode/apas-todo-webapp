@@ -1,6 +1,6 @@
-import { KeyValueStorage } from '@/domain/persist/storage';
+import { AuthStorage } from '@/domain/auth';
 
-export class LocalStorage implements KeyValueStorage {
+export class LocalStorage implements AuthStorage {
   get(key: string): string | null {
     return window.localStorage.getItem(key);
   }

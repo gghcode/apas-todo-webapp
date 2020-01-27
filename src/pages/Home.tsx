@@ -4,7 +4,7 @@ import { MasterDetail } from '@/components/MasterDetail';
 import { TodosDetail } from '@/pages/Detail/TodosDetail';
 import { TodoCategoryMaster } from '@/pages/Master/TodoCategoryMaster';
 import './Home.css';
-import { TodoCategory } from '@/domain/todo/interactor';
+import { TodoCategory } from '@/domain/todo';
 
 export const Home: React.FC = () => {
   const [categories, setCategories] = useState([] as TodoCategory[]);
@@ -13,7 +13,7 @@ export const Home: React.FC = () => {
 
   useEffect(() => {
     const asyncFunc = async () => {
-      const [categories, err] = await todoStore.fetchTodoCategories();
+      const [categories, err] = await todoStore.getTodoCategories();
 
       setCategories(categories!);
     };
