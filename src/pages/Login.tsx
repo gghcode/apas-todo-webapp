@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useStore } from '@/context/store';
-import { useHistory } from 'react-router-dom';
+import { useUsecase } from '@/context/domain';
 import { toast } from 'react-toastify';
 import './Login.css';
 
 export const Login: React.FC = () => {
   const loginForm = useForm();
-  const history = useHistory();
   const { authStore } = useStore();
+  const { authUsecase } = useUsecase();
 
   const handleLoginFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,15 +23,14 @@ export const Login: React.FC = () => {
       return;
     }
 
-    const [_, err] = await authStore.login({ username, password });
-    if (err != undefined) {
+    try {
+      await authUsecase.login({ username, password });
+    } catch (err) {
       showMessage(err.message);
       return;
     }
 
-    showMessage('hi');
-
-    history.push('/');
+    authStore.authenticate();
   };
 
   return (

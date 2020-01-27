@@ -1,5 +1,8 @@
 import { User } from './entity';
 
-export interface UserUsecase {
-  me(): Promise<User>;
+export class UserUsecase {
+  async me(): Promise<User> {
+    let any: any;
+    return any;
+  }
 }

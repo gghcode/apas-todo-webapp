@@ -1,12 +1,6 @@
 import React from 'react';
 import { useLocalStore } from 'mobx-react';
-import { LocalStorage } from '@/infrastructures/localStorage';
 import { UserStore, AuthStore, TodoStore } from '@/stores';
-import { ApiAgent } from '@/infrastructures/agent';
-import { NativeAgent } from '@/infrastructures/nativeAgent';
-import { AuthInteractor, UserInteractor, KeyValueStorage } from '@/domain';
-import { AuthApi, UserApi, TodoApi } from '@/infrastructures/api';
-import { TokenContainer } from '@/domain/auth/usecase';
 
 export const StoreProvider: React.FC = ({ children }) => {
   const store = useLocalStore(createStore);
@@ -25,17 +19,9 @@ export const useStore = () => {
 
 const storeContext = React.createContext<TStore | null>(null);
 const createStore = () => {
-  const tokenContainer = new TokenContainer();
-  const agent: ApiAgent = new NativeAgent(tokenContainer);
-
-  const localStorage: KeyValueStorage = new LocalStorage();
-  const authStore: AuthInteractor = new AuthStore(
-    tokenContainer,
-    new AuthApi(agent),
-    localStorage
-  );
-  const userStore: UserInteractor = new UserStore(new UserApi(agent));
-  const todoStore = new TodoStore(new TodoApi(agent));
+  const authStore = new AuthStore();
+  const userStore = new UserStore();
+  const todoStore = new TodoStore();
 
   return {
     authStore,

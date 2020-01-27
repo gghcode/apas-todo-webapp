@@ -13,20 +13,19 @@ export const Home: React.FC = () => {
 
   useEffect(() => {
     const asyncFunc = async () => {
-      const [categories, err] = await todoStore.getTodoCategories();
-
-      setCategories(categories!);
+      // const [categories, err] = await todoStore.getTodoCategories();
+      // setCategories(categories!);
     };
 
     asyncFunc();
   }, [todoStore]);
 
   useEffect(() => {
-    todoStore.fetchTodos();
+    // todoStore.fetchTodos();
   }, [todoStore]);
 
   useEffect(() => {
-    const res = userStore.me().then((a) => console.log(a));
+    // const res = userStore.me().then((a) => console.log(a));
   }, [userStore]);
 
   return (

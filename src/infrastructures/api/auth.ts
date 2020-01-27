@@ -12,7 +12,7 @@ export class AuthApi implements AuthGateway {
 
     const json = await res.json();
     if (res.status !== 200) {
-      throw new Error(json);
+      throw json.error;
     }
 
     return {

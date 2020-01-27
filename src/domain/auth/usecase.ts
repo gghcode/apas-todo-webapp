@@ -1,4 +1,5 @@
 import { Token } from './entity';
+import { AuthGateway } from '.';
 
 export class TokenContainer {
   accessToken: string = '';
@@ -14,10 +15,10 @@ export class TokenContainer {
 
 export class AuthUsecase {
   // authenticated: boolean;
+  constructor(private readonly authGateway: AuthGateway) {}
 
   async login(req: { username: string; password: string }): Promise<Token> {
-    let token: any = {};
-
+    const token = await this.authGateway.login(req);
     return token;
   }
 }
