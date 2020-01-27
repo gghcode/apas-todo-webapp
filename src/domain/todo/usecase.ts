@@ -4,10 +4,18 @@ export class TodoUsecase {
   constructor(private readonly todoGateway: TodoGateway) {}
 
   async getTodoCategories(): Promise<TodoCategory[]> {
-    return [];
+    return [
+      {
+        name: 'ab',
+      },
+      {
+        name: 'bcd',
+      },
+    ];
   }
 
   async getTodos(): Promise<Todo[]> {
-    return this.todoGateway.todos();
+    const todos = await this.todoGateway.todos();
+    return todos;
   }
 }

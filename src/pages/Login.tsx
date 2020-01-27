@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useStore } from '@/context/store';
 import { useUsecase } from '@/context/domain';
 import { toast } from 'react-toastify';
@@ -32,6 +32,12 @@ export const Login: React.FC = () => {
 
     authStore.authenticate();
   };
+
+  useEffect(() => {
+    if (authUsecase.hasToken()) {
+      authStore.authenticate();
+    }
+  }, [authStore, authUsecase]);
 
   return (
     <div className="login-page">

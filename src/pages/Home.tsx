@@ -1,32 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import { useStore } from '@/context/store';
 import { MasterDetail } from '@/components/MasterDetail';
 import { TodosDetail } from '@/pages/Detail/TodosDetail';
 import { TodoCategoryMaster } from '@/pages/Master/TodoCategoryMaster';
-import './Home.css';
 import { TodoCategory } from '@/domain/todo';
+import { useUsecase } from '@/context/domain';
+import './Home.css';
 
 export const Home: React.FC = () => {
   const [categories, setCategories] = useState([] as TodoCategory[]);
   const [category, setCategory] = useState();
-  const { userStore, todoStore } = useStore();
+  const { todoUsecase } = useUsecase();
 
   useEffect(() => {
-    const asyncFunc = async () => {
-      // const [categories, err] = await todoStore.getTodoCategories();
-      // setCategories(categories!);
-    };
-
-    asyncFunc();
-  }, [todoStore]);
+    todoUsecase
+      .getTodoCategories()
+      .then((categories) => setCategories(categories));
+  }, [todoUsecase]);
 
   useEffect(() => {
-    // todoStore.fetchTodos();
-  }, [todoStore]);
+    todoUsecase.getTodos().then((todos) => console.log(todos));
+  }, [category, todoUsecase]);
 
-  useEffect(() => {
-    // const res = userStore.me().then((a) => console.log(a));
-  }, [userStore]);
+  // useEffect(() => {
+  //   // const res = userStore.me().then((a) => console.log(a));
+  // }, [userStore]);
 
   return (
     <MasterDetail

@@ -5,18 +5,11 @@ import { useStore } from '@/context/store';
 
 const LoggedInRedirectRoute = ({ component: Component, ...rest }: any) => {
   const { authStore } = useStore();
-
+  // console.log(authStore.authenticated);
   return (
-    <Route
-      {...rest}
-      render={(props) =>
-        !authStore.authenticated ? (
-          <Component {...props} />
-        ) : (
-          <Redirect to="/" />
-        )
-      }
-    />
+    <Route {...rest}>
+      {!authStore.authenticated ? <Component /> : <Redirect to="/" />}
+    </Route>
   );
 };
 
