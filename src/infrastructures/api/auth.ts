@@ -1,15 +1,16 @@
 import { AuthGateway } from '@/domain/auth';
 import { Token } from '@/domain/auth/entity';
-import { ApiAgent } from '@/infrastructures/agent';
+import { Agent, RequestBuilder, setBody } from '@/infrastructures/http';
 
 export class AuthApi implements AuthGateway {
-  constructor(readonly agent: ApiAgent) {}
+  constructor(readonly agent: Agent) {}
 
-  async login(req: { username: string; password: string }): Promise<Token> {
-    const res = await this.agent.post('/api/auth/token', {
-      body: req,
-    });
+  async login(param: { username: string; password: string }): Promise<Token> {
+    const req = new RequestBuilder()
+      .with(setBody(param))
+      .build('/api/auth/token', 'POST');
 
+    const res = await this.agent.run(req);
     const json = await res.json();
     if (res.status !== 200) {
       throw json.error;

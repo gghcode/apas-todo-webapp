@@ -1,9 +1,9 @@
 import { UserGateway } from '@/domain/user';
 import { User } from '@/domain/user/entity';
-import { ApiAgent } from '@/infrastructures/agent';
+import { RestAgent } from '@/infrastructures/restAgent';
 
 export class UserApi implements UserGateway {
-  constructor(readonly agent: ApiAgent) {}
+  constructor(readonly agent: RestAgent) {}
 
   async me(): Promise<User> {
     const res = await this.agent.get('/api/user');

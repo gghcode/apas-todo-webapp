@@ -3,13 +3,14 @@ import { UserUsecase } from '@/domain/user';
 import { TodoUsecase } from '@/domain/todo';
 import { AuthUsecase } from '@/domain/auth';
 import { TodoApi, AuthApi } from '@/infrastructures/api';
-import { NativeAgent } from '@/infrastructures/nativeAgent';
-import { TokenContainer } from '@/domain/auth/usecase';
+import { FetchAgent } from '@/infrastructures/nativeAgent';
+// import { TokenContainer } from '@/domain/auth/usecase';
 import { LocalStorage } from '@/infrastructures/localStorage';
 
 const createUsecase = () => {
-  const tokenContainer = new TokenContainer();
-  const agent = new NativeAgent(tokenContainer);
+  // const agent: any = {};
+  // const tokenContainer = new TokenContainer();
+  const agent = new FetchAgent();
 
   const userUsecase = new UserUsecase();
   const todoUsecase = new TodoUsecase(new TodoApi(agent));

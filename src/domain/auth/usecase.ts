@@ -1,18 +1,6 @@
 import { Token } from './entity';
 import { AuthGateway, AuthStorage } from '.';
 
-export class TokenContainer {
-  accessToken: string = '';
-
-  set(accessToken: string): void {
-    this.accessToken = accessToken;
-  }
-
-  get(): string {
-    return this.accessToken;
-  }
-}
-
 export class AuthUsecase {
   constructor(
     private readonly authGateway: AuthGateway,

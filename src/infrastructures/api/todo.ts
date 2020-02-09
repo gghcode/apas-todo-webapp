@@ -1,8 +1,8 @@
 import { TodoGateway, Todo } from '@/domain/todo';
-import { ApiAgent } from '@/infrastructures/agent';
+import { RestAgent } from '@/infrastructures/restAgent';
 
 export class TodoApi implements TodoGateway {
-  constructor(readonly agent: ApiAgent) {}
+  constructor(readonly agent: any) {}
 
   async todos(): Promise<Todo[]> {
     const res = await this.agent.get('/api/todos');
