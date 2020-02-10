@@ -1,5 +1,17 @@
 export class AppContext {
-  get(key: string): any {}
+  private readonly map: Map<string, any> = new Map<string, any>();
 
-  set(key: string, val: any): void {}
+  get(key: string): any {
+    return this.map.get(key);
+  }
+
+  set(key: string, val: any): AppContext {
+    const copy = new AppContext();
+    for (const k in this.map) {
+      copy.map.set(k, this.map.get(k));
+    }
+
+    copy.map.set(key, val);
+    return copy;
+  }
 }

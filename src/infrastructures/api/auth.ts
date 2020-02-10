@@ -1,9 +1,18 @@
 import { AuthGateway } from '@/domain/auth';
 import { Token } from '@/domain/auth/entity';
-import { Agent, RequestBuilder, setBody } from '@/infrastructures/http';
+import {
+  Agent,
+  RequestBuilder,
+  setBody,
+  bindToken,
+} from '@/infrastructures/http';
 
 export class AuthApi implements AuthGateway {
   constructor(readonly agent: Agent) {}
+
+  setToken(accessToken: string) {
+    bindToken(this.agent, accessToken);
+  }
 
   async login(param: { username: string; password: string }): Promise<Token> {
     const req = new RequestBuilder()

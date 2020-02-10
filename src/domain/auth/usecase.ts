@@ -15,6 +15,7 @@ export class AuthUsecase {
   async login(req: { username: string; password: string }): Promise<Token> {
     const token = await this.authGateway.login(req);
 
+    this.authGateway.setToken(token.accessToken);
     saveTokenToStorage(token, this.authStorage);
 
     return token;
