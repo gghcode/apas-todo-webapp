@@ -12,6 +12,11 @@ export class AuthUsecase {
     return token !== null;
   }
 
+  authorize() {
+    const accessToken = this.authStorage.get(accessTokenKey);
+    this.authGateway.setToken(accessToken!);
+  }
+
   async login(req: { username: string; password: string }): Promise<Token> {
     const token = await this.authGateway.login(req);
 

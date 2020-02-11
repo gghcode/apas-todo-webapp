@@ -35,6 +35,7 @@ export const Login: React.FC = () => {
 
   useEffect(() => {
     if (authUsecase.hasToken()) {
+      authUsecase.authorize();
       authStore.authenticate();
     }
   }, [authStore, authUsecase]);

@@ -3,7 +3,7 @@ import { Route, Redirect } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '@/context/store';
 
-const PrivateRoute = ({ component: Component, ...rest }: any) => {
+const RequiredLogInRoute = ({ component: Component, ...rest }: any) => {
   const { authStore } = useStore();
 
   return (
@@ -20,4 +20,4 @@ const PrivateRoute = ({ component: Component, ...rest }: any) => {
   );
 };
 
-export default observer(PrivateRoute);
+export default observer(RequiredLogInRoute);
