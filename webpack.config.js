@@ -47,4 +47,6 @@ module.exports = {
     port: 8081,
     historyApiFallback: true,
   },
+  watch: true,
+  devtool: 'cheap-eval-source-map',
 };
