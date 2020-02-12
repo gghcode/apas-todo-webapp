@@ -1,6 +1,6 @@
-import { AuthStorage } from '@/domain/auth';
+import { LocalStorage } from '@/domain/components';
 
-export class LocalStorage implements AuthStorage {
+export class WindowLocalStorage implements LocalStorage {
   get(key: string): string | null {
     return window.localStorage.getItem(key);
   }

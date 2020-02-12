@@ -1,6 +1,5 @@
-import { AuthUsecase } from './usecase';
+import { AuthUsecase } from './authUsecase';
 import { Token } from './entity';
 import { AuthGateway } from './authGateway';
-import { AuthStorage } from './authStorage';
 
-export { AuthUsecase, AuthGateway, Token, AuthStorage };
+export { AuthUsecase, AuthGateway, Token };

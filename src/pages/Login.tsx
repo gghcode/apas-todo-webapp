@@ -4,6 +4,11 @@ import { useUsecase } from '@/context/domain';
 import { toast } from 'react-toastify';
 import './Login.css';
 
+type LoginFormType = {
+  username: string;
+  password: string;
+};
+
 export const Login: React.FC = () => {
   const loginForm = useForm();
   const { authStore } = useStore();
@@ -13,13 +18,7 @@ export const Login: React.FC = () => {
     e.preventDefault();
 
     const { username, password } = loginForm.form;
-    if (username === '') {
-      showMessage('username is required');
-      return;
-    }
-
-    if (password === '') {
-      showMessage('password is required');
+    if (!isValidLoginForm(loginForm.form)) {
       return;
     }
 
@@ -30,13 +29,13 @@ export const Login: React.FC = () => {
       return;
     }
 
-    authStore.authenticate();
+    authStore.sessionLogin();
   };
 
   useEffect(() => {
-    if (authUsecase.hasToken()) {
-      authUsecase.authorize();
-      authStore.authenticate();
+    if (authUsecase.existsTokenInLocalStorage()) {
+      authUsecase.useAccessToken();
+      authStore.sessionLogin();
     }
   }, [authStore, authUsecase]);
 
@@ -72,8 +71,23 @@ export const Login: React.FC = () => {
   );
 };
 
+const isValidLoginForm = (form: LoginFormType): boolean => {
+  const { username, password } = form;
+  if (username === '') {
+    showMessage('username is required');
+    return false;
+  }
+
+  if (password === '') {
+    showMessage('password is required');
+    return false;
+  }
+
+  return true;
+};
+
 const useForm = () => {
-  const [form, setForm] = useState({
+  const [form, setForm]: [LoginFormType, any] = useState({
     username: '',
     password: '',
   });

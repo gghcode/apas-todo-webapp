@@ -5,7 +5,7 @@ import { AuthUsecase } from '@/domain/auth';
 import { TodoApi, AuthApi } from '@/infrastructures/api';
 import { FetchAgent } from '@/infrastructures/nativeAgent';
 // import { TokenContainer } from '@/domain/auth/usecase';
-import { LocalStorage } from '@/infrastructures/localStorage';
+import { WindowLocalStorage } from '@/infrastructures/windowLocalStorage';
 
 const createUsecase = () => {
   // const agent: any = {};
@@ -14,7 +14,10 @@ const createUsecase = () => {
 
   const userUsecase = new UserUsecase();
   const todoUsecase = new TodoUsecase(new TodoApi(agent));
-  const authUsecase = new AuthUsecase(new AuthApi(agent), new LocalStorage());
+  const authUsecase = new AuthUsecase(
+    new AuthApi(agent),
+    new WindowLocalStorage()
+  );
 
   return {
     userUsecase,
