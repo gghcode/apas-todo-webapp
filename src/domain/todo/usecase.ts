@@ -6,10 +6,13 @@ export class TodoUsecase {
   async getTodoCategories(): Promise<TodoCategory[]> {
     return [
       {
-        name: 'ab',
+        name: 'All',
       },
       {
-        name: 'bcd',
+        name: 'Today',
+      },
+      {
+        name: 'Search',
       },
     ];
   }
