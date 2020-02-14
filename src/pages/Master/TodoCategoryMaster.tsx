@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Header } from '@/components/Header';
 import { NavLink } from 'react-router-dom';
-import { TodoCategory } from '@/domain/todo';
+import { TodoCategory } from '@/core/entities';
 
 interface Props {
   categories: TodoCategory[];

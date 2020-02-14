@@ -12,7 +12,7 @@ type LoginFormType = {
 export const Login: React.FC = () => {
   const loginForm = useForm();
   const { authStore } = useStore();
-  const { authUsecase } = useUsecase();
+  const { authInteractor } = useUsecase();
 
   const handleLoginFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,7 +23,7 @@ export const Login: React.FC = () => {
     }
 
     try {
-      await authUsecase.login({ username, password });
+      await authInteractor.login({ username, password });
     } catch (err) {
       showMessage(err.message);
       return;
@@ -33,11 +33,11 @@ export const Login: React.FC = () => {
   };
 
   useEffect(() => {
-    if (authUsecase.existsTokenInLocalStorage()) {
-      authUsecase.useAccessToken();
-      authStore.sessionLogin();
-    }
-  }, [authStore, authUsecase]);
+    // if (authInteractor.existsTokenInLocalStorage()) {
+    //   authInteractor.useAccessToken();
+    //   authStore.sessionLogin();
+    // }
+  }, [authInteractor, authStore]);
 
   return (
     <div className="login-page">

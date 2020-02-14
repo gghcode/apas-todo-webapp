@@ -2,28 +2,24 @@ import React, { useEffect, useState } from 'react';
 import { MasterDetail } from '@/components/MasterDetail';
 import { TodosDetail } from '@/pages/Detail/TodosDetail';
 import { TodoCategoryMaster } from '@/pages/Master/TodoCategoryMaster';
-import { TodoCategory } from '@/domain/todo';
+import { TodoCategory } from '@/core/entities';
 import { useUsecase } from '@/context/domain';
 import './Home.css';
 
 export const Home: React.FC = () => {
   const [categories, setCategories] = useState([] as TodoCategory[]);
   const [category, setCategory] = useState();
-  const { todoUsecase } = useUsecase();
+  const { todoInteractor } = useUsecase();
 
   useEffect(() => {
-    todoUsecase
-      .getTodoCategories()
-      .then((categories) => setCategories(categories));
-  }, [todoUsecase]);
+    // todoInteractor
+    //   .getTodoCategories()
+    //   .then((categories) => setCategories(categories));
+  }, [todoInteractor]);
 
   useEffect(() => {
-    todoUsecase.getTodos().then((todos) => console.log(todos));
-  }, [category, todoUsecase]);
-
-  // useEffect(() => {
-  //   // const res = userStore.me().then((a) => console.log(a));
-  // }, [userStore]);
+    todoInteractor.getTodos().then((todos) => console.log(todos));
+  }, [category, todoInteractor]);
 
   return (
     <MasterDetail

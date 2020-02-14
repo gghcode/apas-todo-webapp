@@ -1,28 +1,24 @@
 import React from 'react';
-import { UserUsecase } from '@/domain/user';
-import { TodoUsecase } from '@/domain/todo';
-import { AuthUsecase } from '@/domain/auth';
-import { TodoApi, AuthApi } from '@/infrastructures/api';
-import { FetchAgent } from '@/infrastructures/nativeAgent';
-// import { TokenContainer } from '@/domain/auth/usecase';
-import { WindowLocalStorage } from '@/infrastructures/windowLocalStorage';
+import { AuthService, TodoService } from '@/core/useCases';
+import { TodoInteractor, AuthInteractor } from '@/core/interfaces';
+import { RestTodoGateway, RestAuthGateway } from '@/core/frameworks/gateway';
+import { FetchAgent } from '@/core/frameworks/agent/fetchAgent';
+import { WindowLocalStorage } from '@/core/frameworks/storage/windowLocalStorage';
 
 const createUsecase = () => {
-  // const agent: any = {};
-  // const tokenContainer = new TokenContainer();
   const agent = new FetchAgent();
+  const todoInteractor: TodoInteractor = new TodoService(
+    new RestTodoGateway(agent)
+  );
 
-  const userUsecase = new UserUsecase();
-  const todoUsecase = new TodoUsecase(new TodoApi(agent));
-  const authUsecase = new AuthUsecase(
-    new AuthApi(agent),
+  const authInteractor: AuthInteractor = new AuthService(
+    new RestAuthGateway(agent),
     new WindowLocalStorage()
   );
 
   return {
-    userUsecase,
-    todoUsecase,
-    authUsecase,
+    todoInteractor,
+    authInteractor,
   };
 };
 
