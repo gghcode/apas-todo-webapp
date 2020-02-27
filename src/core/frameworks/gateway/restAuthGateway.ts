@@ -1,6 +1,5 @@
-import { AuthGateway } from '@/core/interfaces';
-import { Agent } from '@/core/interfaces/http';
-import { Token } from '@/core/entities';
+import { Agent, RequestBuilder, setBody } from '@/core/interfaces/http';
+import { AuthGateway } from '@/core/domain/auth';
 
 export class RestAuthGateway implements AuthGateway {
   constructor(private readonly agent: Agent) {}
@@ -9,8 +8,16 @@ export class RestAuthGateway implements AuthGateway {
     // bindToken(this.agent, accessToken);
   }
 
-  async login(req: { username: string; password: string }): Promise<Token> {
-    const json: any = {};
+  async login(param: LoginRequest): Promise<TokenResponse> {
+    const req = new RequestBuilder()
+      .with(setBody(param))
+      .build('/api/auth/token', 'POST');
+
+    const res = await this.agent.run(req);
+    const json = await res.json();
+    if (!res.ok) {
+      throw new Error(json);
+    }
 
     return {
       type: json.type,

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useStore } from '@/context/store';
-import { useUsecase } from '@/context/domain';
 import { toast } from 'react-toastify';
 import './Login.css';
 
@@ -12,7 +11,6 @@ type LoginFormType = {
 export const Login: React.FC = () => {
   const loginForm = useForm();
   const { authStore } = useStore();
-  const { authInteractor } = useUsecase();
 
   const handleLoginFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,22 +20,16 @@ export const Login: React.FC = () => {
       return;
     }
 
-    try {
-      await authInteractor.login({ username, password });
-    } catch (err) {
-      showMessage(err.message);
-      return;
+    const err = await authStore.login({ username, password });
+    if (err !== undefined) {
+      console.log(err);
+      showMessage('invalid login failed');
     }
-
-    authStore.sessionLogin();
   };
 
   useEffect(() => {
-    // if (authInteractor.existsTokenInLocalStorage()) {
-    //   authInteractor.useAccessToken();
-    //   authStore.sessionLogin();
-    // }
-  }, [authInteractor, authStore]);
+    authStore.loginIfHasTokenInLocal();
+  }, [authStore]);
 
   return (
     <div className="login-page">

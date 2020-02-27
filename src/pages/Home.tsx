@@ -3,23 +3,22 @@ import { MasterDetail } from '@/components/MasterDetail';
 import { TodosDetail } from '@/pages/Detail/TodosDetail';
 import { TodoCategoryMaster } from '@/pages/Master/TodoCategoryMaster';
 import { TodoCategory } from '@/core/entities';
-import { useUsecase } from '@/context/domain';
 import './Home.css';
 
 export const Home: React.FC = () => {
   const [categories, setCategories] = useState([] as TodoCategory[]);
   const [category, setCategory] = useState();
-  const { todoInteractor } = useUsecase();
+  // const { todoInteractor } = useUsecase();
 
   useEffect(() => {
     // todoInteractor
     //   .getTodoCategories()
     //   .then((categories) => setCategories(categories));
-  }, [todoInteractor]);
+  }, []);
 
   useEffect(() => {
-    todoInteractor.getTodos().then((todos) => console.log(todos));
-  }, [category, todoInteractor]);
+    // todoInteractor.getTodos().then((todos) => console.log(todos));
+  }, [category]);
 
   return (
     <MasterDetail

@@ -1,11 +1,10 @@
-import { TodoGateway } from '@/core/interfaces';
 import { Agent } from '@/core/interfaces/http';
-import { Todo } from '@/core/entities';
+import { TodoGateway } from '@/core/domain/todo';
 
 export class RestTodoGateway implements TodoGateway {
   constructor(private readonly agent: Agent) {}
 
-  async todos(): Promise<Todo[]> {
+  async todos(): Promise<TodoResponse[]> {
     // const req = new RequestBuilder()
     //   .withAppContext(setToken())
     //   .build('/api/todos', 'GET');

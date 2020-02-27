@@ -1,13 +1,31 @@
 import { observable, action } from 'mobx';
+import { ErrorNullable } from '@/core/entities';
+import { AuthUsecase } from '@/core/domain/auth';
 
 export class AuthStore {
   @observable
   authenticated: boolean = false;
 
+  constructor(private readonly authService: AuthUsecase) {}
+
   @action
-  sessionLogin() {
+  async login(req: {
+    username: string;
+    password: string;
+  }): Promise<ErrorNullable> {
+    try {
+      await this.authService.login(req);
+    } catch (err) {
+      return err;
+    }
+
     this.authenticated = true;
+
+    return undefined;
   }
+
+  @action
+  loginIfHasTokenInLocal(): void {}
 
   @action
   sessionLogout() {
