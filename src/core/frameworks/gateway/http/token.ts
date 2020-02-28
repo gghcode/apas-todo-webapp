@@ -1,15 +1,15 @@
-import { Request, EffectWithAppContextFunc } from './request';
+import { Request } from './request';
 import { Context } from '@/core/entities';
 import { Agent } from '.';
+import { EffectFunc } from './requestBuilder';
 
 const accessTokenKey = 'ACCESS_TOKEN';
 
 export const bindToken = (agent: Agent, token: string) => {
-  const ctx = agent.context().set(accessTokenKey, token);
-  agent.useContext(ctx);
+  agent.setAccessToken(token);
 };
 
-export const setToken = (): EffectWithAppContextFunc => {
+export const setToken = (): EffectFunc => {
   return (req: Request, ctx: Context) => {
     req.headers['Authorization'] = `Bearer ${ctx.get(accessTokenKey)}`;
   };

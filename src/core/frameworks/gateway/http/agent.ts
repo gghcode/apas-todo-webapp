@@ -1,9 +1,6 @@
-import { Request } from './request';
-import { Context } from '@/core/entities';
+import { RequestBuilder } from '.';
 
 export interface Agent {
-  context(): Context;
-  useContext(ctx: Context): void;
-
-  run(req: Request): Promise<any>;
+  setAccessToken(token: string): void;
+  run(builder: RequestBuilder): Promise<any>;
 }

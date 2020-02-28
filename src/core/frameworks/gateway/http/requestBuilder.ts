@@ -1,32 +1,31 @@
-import { Request, EffectWithAppContextFunc } from './request';
+import { Request } from './request';
+import { Context } from '@/core/entities';
 
-export type EffectFunc = (req: Request) => void;
+export type EffectFunc = (req: Request, ctx: Context) => void;
 export type AllowMethods = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
 export class RequestBuilder {
   pipelines: EffectFunc[] = [];
-  requireCtxPipes: EffectWithAppContextFunc[] = [];
+
+  constructor(
+    private readonly path: string,
+    private readonly method: AllowMethods
+  ) {}
 
   with(func: EffectFunc): RequestBuilder {
     this.pipelines.push(func);
     return this;
   }
-
-  withAppContext(func: EffectWithAppContextFunc): RequestBuilder {
-    this.requireCtxPipes.push(func);
-    return this;
-  }
-
-  build(path: string, method: AllowMethods): Request {
+  
+  build(ctx: Context): Request {
     const req: Request = {
-      path: path,
-      method: method,
-      lazyPipes: this.requireCtxPipes,
+      path: this.path,
+      method: this.method,
       headers: {},
     };
 
     for (const effect of this.pipelines) {
-      effect(req);
+      effect(req, ctx);
     }
 
     return req;

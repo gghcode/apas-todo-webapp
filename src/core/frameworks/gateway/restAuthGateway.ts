@@ -9,9 +9,9 @@ export class RestAuthGateway implements AuthGateway {
   }
 
   async login(param: LoginRequest): Promise<TokenResponse> {
-    const req = new RequestBuilder()
-      .with(setBody(param))
-      .build('/api/auth/token', 'POST');
+    const req = new RequestBuilder('/api/auth/token', 'POST').with(
+      setBody(param)
+    );
 
     const res = await this.agent.run(req);
     const json = await res.json();

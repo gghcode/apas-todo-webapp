@@ -1,25 +1,19 @@
 // import { RestAgent, Request } from './restAgent';
 import { Context } from '@/core/entities';
-import { Agent, Request } from '@/core/frameworks/gateway/http';
+import { Agent, RequestBuilder } from '@/core/frameworks/gateway/http';
 
 const baseUrl = 'https://apas-todo-api.azurewebsites.net';
+const accessTokenKey = 'ACCESS_TOKEN';
 
 export class FetchAgent implements Agent {
   private ctx = new Context();
 
-  context(): Context {
-    return this.ctx;
+  setAccessToken(token: string): void {
+    this.ctx = this.ctx.set(accessTokenKey, token);
   }
 
-  useContext(ctx: Context) {
-    this.ctx = ctx;
-  }
-
-  run(req: Request): Promise<any> {
-    for (const pipe of req.lazyPipes) {
-      pipe(req, this.ctx);
-    }
-
+  run(builder: RequestBuilder): Promise<any> {
+    const req = builder.build(this.ctx);
     return fetch(baseUrl + req.path, {
       method: req.method,
       headers: req.headers,
