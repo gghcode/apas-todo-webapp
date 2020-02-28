@@ -1,6 +1,5 @@
-// import { RestAgent, Request } from './restAgent';
-import { Context } from '@/core/entities';
 import { Agent, RequestBuilder } from '@/core/frameworks/gateway/http';
+import { Context } from './http/context';
 
 const baseUrl = 'https://apas-todo-api.azurewebsites.net';
 const accessTokenKey = 'ACCESS_TOKEN';

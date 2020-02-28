@@ -1,5 +1,5 @@
 import { Request } from './request';
-import { Context } from '@/core/entities';
+import { Context } from './context';
 
 export type EffectFunc = (req: Request, ctx: Context) => void;
 export type AllowMethods = 'GET' | 'POST' | 'PUT' | 'DELETE';
@@ -16,7 +16,7 @@ export class RequestBuilder {
     this.pipelines.push(func);
     return this;
   }
-  
+
   build(ctx: Context): Request {
     const req: Request = {
       path: this.path,

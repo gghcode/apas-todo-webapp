@@ -1,7 +1,7 @@
 import { Request } from './request';
-import { Context } from '@/core/entities';
 import { Agent } from '.';
 import { EffectFunc } from './requestBuilder';
+import { Context } from './context';
 
 const accessTokenKey = 'ACCESS_TOKEN';
 

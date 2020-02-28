@@ -1,5 +1,4 @@
 import { observable, action } from 'mobx';
-import { ErrorNullable } from '@/core/entities';
 import { AuthUsecase } from '@/core/domain/auth';
 
 export class AuthStore {
@@ -9,10 +8,7 @@ export class AuthStore {
   constructor(private readonly authService: AuthUsecase) {}
 
   @action
-  async login(req: {
-    username: string;
-    password: string;
-  }): Promise<ErrorNullable> {
+  async login(req: { username: string; password: string }): Promise<void> {
     try {
       await this.authService.login(req);
     } catch (err) {
