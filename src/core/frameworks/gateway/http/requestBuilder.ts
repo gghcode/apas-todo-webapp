@@ -1,18 +1,16 @@
-import { Request } from './request';
+import { Request, AllowMethods } from './request';
 import { Context } from './context';
-
-export type EffectFunc = (req: Request, ctx: Context) => void;
-export type AllowMethods = 'GET' | 'POST' | 'PUT' | 'DELETE';
+import { RequestDecorateFunc } from './decorators';
 
 export class RequestBuilder {
-  pipelines: EffectFunc[] = [];
+  pipelines: RequestDecorateFunc[] = [];
 
   constructor(
     private readonly path: string,
     private readonly method: AllowMethods
   ) {}
 
-  with(func: EffectFunc): RequestBuilder {
+  with(func: RequestDecorateFunc): RequestBuilder {
     this.pipelines.push(func);
     return this;
   }
@@ -24,8 +22,8 @@ export class RequestBuilder {
       headers: {},
     };
 
-    for (const effect of this.pipelines) {
-      effect(req, ctx);
+    for (const decorate of this.pipelines) {
+      decorate(req, ctx);
     }
 
     return req;

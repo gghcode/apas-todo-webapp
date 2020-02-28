@@ -5,7 +5,7 @@ export class RestAuthGateway implements AuthGateway {
   constructor(private readonly agent: Agent) {}
 
   setToken(accessToken: string) {
-    // bindToken(this.agent, accessToken);
+    this.agent.setAccessToken(accessToken);
   }
 
   async login(param: LoginRequest): Promise<TokenResponse> {
