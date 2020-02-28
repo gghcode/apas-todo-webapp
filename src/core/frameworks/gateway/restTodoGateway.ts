@@ -1,4 +1,4 @@
-import { Agent } from '@/core/interfaces/http';
+import { Agent } from '@/core/frameworks/gateway/http';
 import { TodoGateway } from '@/core/domain/todo';
 
 export class RestTodoGateway implements TodoGateway {

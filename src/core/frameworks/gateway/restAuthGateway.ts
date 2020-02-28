@@ -1,4 +1,4 @@
-import { Agent, RequestBuilder, setBody } from '@/core/interfaces/http';
+import { Agent, RequestBuilder, setBody } from '@/core/frameworks/gateway/http';
 import { AuthGateway } from '@/core/domain/auth';
 
 export class RestAuthGateway implements AuthGateway {

@@ -1,6 +1,6 @@
-import { LocalStorage } from '@/core/interfaces';
+import { Storage } from '@/core/domain/component/storage';
 
-export class WindowLocalStorage implements LocalStorage {
+export class LocalStorage implements Storage {
   get(key: string): string | null {
     return window.localStorage.getItem(key);
   }
