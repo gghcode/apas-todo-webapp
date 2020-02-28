@@ -1,5 +1,4 @@
 import { Request, AllowMethods } from './request';
-import { Context } from './context';
 import { RequestDecorateFunc } from './decorators';
 
 export class RequestBuilder {
@@ -15,7 +14,7 @@ export class RequestBuilder {
     return this;
   }
 
-  build(ctx: Context): Request {
+  build(): Request {
     const req: Request = {
       path: this.path,
       method: this.method,
@@ -23,7 +22,7 @@ export class RequestBuilder {
     };
 
     for (const decorate of this.pipelines) {
-      decorate(req, ctx);
+      decorate(req);
     }
 
     return req;

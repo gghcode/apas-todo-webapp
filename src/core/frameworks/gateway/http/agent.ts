@@ -1,10 +1,6 @@
-import { RequestBuilder } from '.';
-import { RequestDecorateFunc } from './decorators';
+import { Request } from './request';
 import { Response } from './response';
 
 export interface Agent {
-  setAccessToken(token: string): void;
-  decorateAccessToken(): RequestDecorateFunc;
-
-  run(builder: RequestBuilder): Promise<Response>;
+  run(req: Request): Promise<Response>;
 }

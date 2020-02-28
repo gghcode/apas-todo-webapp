@@ -5,7 +5,11 @@ export class Context {
     return this.map.get(key);
   }
 
-  set(key: string, val: any): Context {
+  set(key: string, val: any): void {
+    this.map.set(key, val);
+  }
+
+  copyAndSet(key: string, val: any): Context {
     const copy = new Context();
     for (const k in this.map) {
       copy.map.set(k, this.map.get(k));
