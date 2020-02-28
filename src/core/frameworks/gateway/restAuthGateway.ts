@@ -14,8 +14,8 @@ export class RestAuthGateway implements AuthGateway {
     );
 
     const res = await this.agent.run(req);
-    const json = await res.json();
-    if (!res.ok) {
+    const json = res.json;
+    if (res.status !== 200) {
       throw new Error(json);
     }
 
