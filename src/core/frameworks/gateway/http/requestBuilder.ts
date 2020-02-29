@@ -4,20 +4,15 @@ import { RequestDecorateFunc } from './decorators';
 export class RequestBuilder {
   pipelines: RequestDecorateFunc[] = [];
 
-  constructor(
-    private readonly path: string,
-    private readonly method: AllowMethods
-  ) {}
-
   with(func: RequestDecorateFunc): RequestBuilder {
     this.pipelines.push(func);
     return this;
   }
 
-  build(): Request {
+  build(path: string, method: AllowMethods): Request {
     const req: Request = {
-      path: this.path,
-      method: this.method,
+      path,
+      method,
       headers: {},
     };
 
