@@ -1,37 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useStore } from '@/context/store';
-import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import './Login.css';
 
+type LoginFormType = {
+  username: string;
+  password: string;
+};
+
 export const Login: React.FC = () => {
   const loginForm = useForm();
-  const history = useHistory();
   const { authStore } = useStore();
 
   const handleLoginFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const { username, password } = loginForm.form;
-    if (username === '') {
-      showMessage('username is required');
+    if (!isValidLoginForm(loginForm.form)) {
       return;
     }
 
-    if (password === '') {
-      showMessage('password is required');
-      return;
+    const err = await authStore.login({ username, password });
+    if (err !== undefined) {
+      console.log(err);
+      showMessage('invalid login failed');
     }
-
-    const [_, err] = await authStore.login({ username, password });
-    if (err != undefined) {
-      showMessage(err.message);
-      return;
-    }
-
-    showMessage('hi');
-
-    history.push('/');
   };
 
   return (
@@ -66,8 +59,23 @@ export const Login: React.FC = () => {
   );
 };
 
+const isValidLoginForm = (form: LoginFormType): boolean => {
+  const { username, password } = form;
+  if (username === '') {
+    showMessage('username is required');
+    return false;
+  }
+
+  if (password === '') {
+    showMessage('password is required');
+    return false;
+  }
+
+  return true;
+};
+
 const useForm = () => {
-  const [form, setForm] = useState({
+  const [form, setForm]: [LoginFormType, any] = useState({
     username: '',
     password: '',
   });

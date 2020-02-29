@@ -1,33 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { useStore } from '@/context/store';
 import { MasterDetail } from '@/components/MasterDetail';
 import { TodosDetail } from '@/pages/Detail/TodosDetail';
 import { TodoCategoryMaster } from '@/pages/Master/TodoCategoryMaster';
+import { TodoCategory } from '@/core/entities';
 import './Home.css';
-import { TodoCategory } from '@/domain/todo/interactor';
 
 export const Home: React.FC = () => {
   const [categories, setCategories] = useState([] as TodoCategory[]);
   const [category, setCategory] = useState();
-  const { userStore, todoStore } = useStore();
+  // const { todoInteractor } = useUsecase();
 
   useEffect(() => {
-    const asyncFunc = async () => {
-      const [categories, err] = await todoStore.fetchTodoCategories();
-
-      setCategories(categories!);
-    };
-
-    asyncFunc();
-  }, [todoStore]);
+    // todoInteractor
+    //   .getTodoCategories()
+    //   .then((categories) => setCategories(categories));
+  }, []);
 
   useEffect(() => {
-    todoStore.fetchTodos();
-  }, [todoStore]);
-
-  useEffect(() => {
-    const res = userStore.me().then((a) => console.log(a));
-  }, [userStore]);
+    // todoInteractor.getTodos().then((todos) => console.log(todos));
+  }, [category]);
 
   return (
     <MasterDetail
