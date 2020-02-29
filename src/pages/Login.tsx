@@ -27,10 +27,6 @@ export const Login: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    authStore.loginIfHasTokenInLocal();
-  }, [authStore]);
-
   return (
     <div className="login-page">
       <div className="login-form">

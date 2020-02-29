@@ -5,6 +5,7 @@ import { useStore } from '@/context/store';
 
 const RequiredLogInRoute = ({ component: Component, ...rest }: any) => {
   const { authStore } = useStore();
+  authStore.loginIfHasTokenInLocal();
 
   return (
     <Route
