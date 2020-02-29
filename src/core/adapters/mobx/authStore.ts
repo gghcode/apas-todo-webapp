@@ -16,7 +16,6 @@ export class AuthStore {
     }
 
     this.authenticated = true;
-
     return undefined;
   }
 
@@ -26,7 +25,8 @@ export class AuthStore {
   }
 
   @action
-  sessionLogout() {
+  logout() {
+    this.authService.clearAccessToken();
     this.authenticated = false;
   }
 }
