@@ -11,7 +11,7 @@ export const configureStores = () => {
   const agent = new FetchAgent();
   const localStorage = new LocalStorage();
   const authStore = new AuthStore(
-    new AuthService(new RestAuthGateway(agent, appContext))
+    new AuthService(new RestAuthGateway(agent, appContext), localStorage)
   );
 
   return {

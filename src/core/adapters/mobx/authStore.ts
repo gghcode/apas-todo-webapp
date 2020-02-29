@@ -8,7 +8,7 @@ export class AuthStore {
   constructor(private readonly authService: AuthUsecase) {}
 
   @action
-  async login(req: { username: string; password: string }): Promise<void> {
+  async login(req: LoginRequest): Promise<void> {
     try {
       await this.authService.login(req);
     } catch (err) {
@@ -21,7 +21,9 @@ export class AuthStore {
   }
 
   @action
-  loginIfHasTokenInLocal(): void {}
+  loginIfHasTokenInLocal(): void {
+    this.authenticated = this.authService.setLocalAccessTokenIfExists();
+  }
 
   @action
   sessionLogout() {
