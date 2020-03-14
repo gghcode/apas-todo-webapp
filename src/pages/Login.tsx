@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useStore } from '@/context/store';
-import { toast } from 'react-toastify';
-import './Login.css';
 
 type LoginFormType = {
   username: string;
@@ -92,5 +90,5 @@ const useForm = () => {
 };
 
 const showMessage = (msg: string) => {
-  toast(msg, { autoClose: 1000 });
+  console.log('LOGIN FAILED', msg);
 };

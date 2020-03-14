@@ -29,6 +29,7 @@ module.exports = {
       {
         test: /\.(scss|sass|css)$/,
         use: ['style-loader', 'css-loader', 'sass-loader'],
+        exclude: /node_modules/,
       },
     ],
   },
@@ -44,10 +45,10 @@ module.exports = {
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
     inline: true,
-    hot: true,
     host: '0.0.0.0',
     port: 8081,
     historyApiFallback: true,
+    watchContentBase: true,
+    compress: true,
   },
-  devtool: 'cheap-eval-source-map',
 };
