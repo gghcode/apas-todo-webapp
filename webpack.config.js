@@ -7,7 +7,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 module.exports = {
   entry: path.join(__dirname, 'src', 'index.tsx'),
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', 'css', '.scss'],
+    extensions: ['.ts', '.tsx', '.js'],
     alias: {
       '@': path.resolve(__dirname, 'src'),
     },
@@ -25,11 +25,6 @@ module.exports = {
       {
         test: /\.tsx?$/,
         loader: 'awesome-typescript-loader',
-      },
-      {
-        test: /\.(scss|sass|css)$/,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
-        exclude: /node_modules/,
       },
     ],
   },

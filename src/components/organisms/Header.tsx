@@ -1,32 +1,35 @@
 import * as React from 'react';
-import { FaPizzaSlice } from 'react-icons/fa';
+import { FaPizzaSlice, FaPlus } from 'react-icons/fa';
+import { Logo } from '@/components/atoms/Logo';
+import { ImageButton } from '@/components/atoms/ImageButton';
+// import './Header.scss';
 
 export const Header = () => {
   return (
-    <header className="header" data-testid="header">
-      <nav>
-        <div className="logo">
-          <img src="/images/logo.png" alt="APAS" />
-        </div>
+    <header className="header">
+      <nav className="container">
+        <Logo />
         <div className="settings">
           <ul>
             <li className="settings__add">
-              <button
+              <ImageButton image={FaPlus} />
+              {/* <button
                 data-testid="quick-add-task-action"
                 aria-label="Quick and task"
                 type="button"
               >
                 +
-              </button>
+              </button> */}
             </li>
             <li className="settings__darkmode">
-              <button
+              <ImageButton image={FaPizzaSlice} />
+              {/* <button
                 data-testid="dark-mode-action"
                 aria-label="Darkmode on/off"
                 type="button"
               >
                 <FaPizzaSlice />
-              </button>
+              </button> */}
             </li>
           </ul>
         </div>

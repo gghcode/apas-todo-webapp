@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Checkbox } from '../atoms/Checkbox';
+import { Checkbox } from '../molecules/Checkbox';
 
 export const Tasks = () => {
   const tasks: any[] = [

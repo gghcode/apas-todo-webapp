@@ -20,7 +20,6 @@ export const Login: React.FC = () => {
 
     const err = await authStore.login({ username, password });
     if (err !== undefined) {
-      console.log(err);
       showMessage('invalid login failed');
     }
   };
