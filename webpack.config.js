@@ -35,7 +35,10 @@ module.exports = {
       favicon: path.join(__dirname, 'public', 'favicon.ico'),
       inject: true,
     }),
-    new CopyPlugin([{ from: 'public/images', to: 'images/' }]),
+    new CopyPlugin([
+      { from: 'public/images', to: 'images/' },
+      { from: 'public/fonts', to: 'fonts/' },
+    ]),
   ],
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
