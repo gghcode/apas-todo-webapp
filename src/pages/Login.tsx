@@ -1,10 +1,41 @@
 import React, { useState } from 'react';
 import { useStore } from '@/context/store';
+import { LoginForm } from '@/components/organisms/LoginForm';
+import { LoginImage } from '@/components/atoms/LoginImage';
+import styled from 'styled-components';
 
-type LoginFormType = {
-  username: string;
-  password: string;
-};
+const PageContainer = styled.div`
+  /* width: 100%; */
+  height: 100vh;
+  display: flex;
+  padding: 15px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+`;
+
+const WindowContainer = styled.div`
+  border-radius: 10px;
+  background-color: #e74c3c;
+
+  padding: 177px 130px 33px 95px;
+  width: 760px;
+
+  overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+`;
+
+const LoginImageWrapper = styled.div`
+  width: 316px;
+`;
+
+interface LoginFormType {
+  readonly username: string;
+  readonly password: string;
+}
 
 export const Login: React.FC = () => {
   const loginForm = useForm();
@@ -25,8 +56,15 @@ export const Login: React.FC = () => {
   };
 
   return (
-    <div className="login-page">
-      <div className="login-form">
+    <PageContainer>
+      <WindowContainer>
+        <LoginImageWrapper>
+          <LoginImage src="/images/img-01.png" />
+        </LoginImageWrapper>
+        <LoginForm />
+      </WindowContainer>
+      {/* <LoginForm /> */}
+      {/* <div className="login-form">
         <h2 className="app-title-h2">APAS TODO</h2>
         <form onSubmit={handleLoginFormSubmit}>
           <div className="form-group">
@@ -51,8 +89,8 @@ export const Login: React.FC = () => {
             Login
           </button>
         </form>
-      </div>
-    </div>
+      </div> */}
+    </PageContainer>
   );
 };
 
