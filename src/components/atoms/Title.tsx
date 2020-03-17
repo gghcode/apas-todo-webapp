@@ -6,4 +6,5 @@ export const Title = styled.h2`
   text-align: center;
   width: 100%;
   display: block;
+  margin: 0;
 `;

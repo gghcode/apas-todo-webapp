@@ -1,35 +1,37 @@
 import React, { useState } from 'react';
 import { useStore } from '@/context/store';
 import { LoginForm } from '@/components/organisms/LoginForm';
-import { LoginImage } from '@/components/atoms/LoginImage';
 import styled from 'styled-components';
 
 const PageContainer = styled.div`
-  /* width: 100%; */
-  height: 100vh;
+  width: 100%;
+  min-height: 100vh;
   display: flex;
   padding: 15px;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
   box-sizing: border-box;
 `;
 
 const WindowContainer = styled.div`
+  width: 390px;
   border-radius: 10px;
-  background-color: #e74c3c;
-
-  padding: 177px 130px 33px 95px;
-  width: 760px;
-
+  background-color: #fff;
   overflow: hidden;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-`;
 
-const LoginImageWrapper = styled.div`
-  width: 316px;
+  box-sizing: inherit;
+  box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
+
+  padding: 80px 55px 30px 55px;
+
+  @media only screen and (max-width: 480px) {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
 `;
 
 interface LoginFormType {
@@ -58,12 +60,8 @@ export const Login: React.FC = () => {
   return (
     <PageContainer>
       <WindowContainer>
-        <LoginImageWrapper>
-          <LoginImage src="/images/img-01.png" />
-        </LoginImageWrapper>
         <LoginForm />
       </WindowContainer>
-      {/* <LoginForm /> */}
       {/* <div className="login-form">
         <h2 className="app-title-h2">APAS TODO</h2>
         <form onSubmit={handleLoginFormSubmit}>
