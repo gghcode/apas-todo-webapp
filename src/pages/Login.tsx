@@ -46,12 +46,11 @@ export const Login: React.FC = () => {
   const handleLoginFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const { username, password } = loginForm.form;
-    if (!isValidLoginForm(loginForm.form)) {
+    if (!isValidLoginFormData(loginForm.data)) {
       return;
     }
 
-    const err = await authStore.login({ username, password });
+    const err = await authStore.login({ ...loginForm.data });
     if (err !== undefined) {
       showMessage('invalid login failed');
     }
@@ -60,40 +59,17 @@ export const Login: React.FC = () => {
   return (
     <PageContainer>
       <WindowContainer>
-        <LoginForm />
+        <LoginForm
+          handleFormChanged={loginForm.handleChanged}
+          handleFormSubmitted={handleLoginFormSubmit}
+        />
       </WindowContainer>
-      {/* <div className="login-form">
-        <h2 className="app-title-h2">APAS TODO</h2>
-        <form onSubmit={handleLoginFormSubmit}>
-          <div className="form-group">
-            <input
-              name="username"
-              placeholder="Username"
-              onChange={loginForm.handleChanged}
-              className="input-login-form form-control"
-            />
-          </div>
-          <div className="form-group">
-            <input
-              name="password"
-              type="password"
-              placeholder="Password"
-              onChange={loginForm.handleChanged}
-              className="input-login-form form-control"
-            />
-          </div>
-
-          <button type="submit" className="btn-login-form btn btn-primary">
-            Login
-          </button>
-        </form>
-      </div> */}
     </PageContainer>
   );
 };
 
-const isValidLoginForm = (form: LoginFormType): boolean => {
-  const { username, password } = form;
+const isValidLoginFormData = (data: LoginFormType): boolean => {
+  const { username, password } = data;
   if (username === '') {
     showMessage('username is required');
     return false;
@@ -108,16 +84,16 @@ const isValidLoginForm = (form: LoginFormType): boolean => {
 };
 
 const useForm = () => {
-  const [form, setForm]: [LoginFormType, any] = useState({
+  const [data, setData]: [LoginFormType, any] = useState({
     username: '',
     password: '',
   });
 
   return {
-    form,
+    data,
     handleChanged: (e: React.ChangeEvent<HTMLInputElement>) => {
-      setForm({
-        ...form,
+      setData({
+        ...data,
         [e.target.name]: e.target.value,
       });
     },

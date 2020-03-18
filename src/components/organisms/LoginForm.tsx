@@ -123,23 +123,39 @@ const SocialLoginButtonWrapper = styled.a`
   -ms-box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.1);
 `;
 
-export const LoginForm: React.FC = () => {
+interface Props {
+  handleFormChanged: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleFormSubmitted: (e: React.FormEvent) => Promise<void>;
+}
+
+export const LoginForm: React.FC<Props> = (props: Props) => {
+  const { handleFormChanged, handleFormSubmitted } = props;
+
   return (
     <>
-      <FormWrapper>
+      <FormWrapper onSubmit={handleFormSubmitted}>
         <TitleWrapper>
           <Title>Login</Title>
         </TitleWrapper>
         <InputWrapper>
-          <Input placeholder="username or email" />
+          <Input
+            name="username"
+            placeholder="username or email"
+            onChange={handleFormChanged}
+          />
           <FocusInput />
         </InputWrapper>
         <InputWrapper>
-          <Input type="password" placeholder="password" />
+          <Input
+            name="password"
+            type="password"
+            placeholder="password"
+            onChange={handleFormChanged}
+          />
           <FocusInput />
         </InputWrapper>
         <LoginButtonWrapper>
-          <Button>Login</Button>
+          <Button type="submit">Login</Button>
         </LoginButtonWrapper>
         <TextWrapper>
           <span>Or login with</span>
