@@ -1,38 +1,7 @@
 import React, { useState } from 'react';
 import { useStore } from '@/context/store';
 import { LoginForm } from '@/components/organisms/LoginForm';
-import styled from 'styled-components';
-
-const PageContainer = styled.div`
-  width: 100%;
-  min-height: 100vh;
-  display: flex;
-  padding: 15px;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  position: relative;
-  z-index: 1;
-  box-sizing: border-box;
-`;
-
-const WindowContainer = styled.div`
-  width: 390px;
-  border-radius: 10px;
-  background-color: #fff;
-  overflow: hidden;
-
-  box-sizing: inherit;
-  box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
-  -webkit-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
-
-  padding: 80px 55px 30px 55px;
-
-  @media only screen and (max-width: 480px) {
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-`;
+import { FormPageTemplate } from '@/components/templates/FormPageTemplate';
 
 interface LoginFormType {
   readonly username: string;
@@ -56,16 +25,14 @@ export const Login: React.FC = () => {
     }
   };
 
-  return (
-    <PageContainer>
-      <WindowContainer>
-        <LoginForm
-          handleFormChanged={loginForm.handleChanged}
-          handleFormSubmitted={handleLoginFormSubmit}
-        />
-      </WindowContainer>
-    </PageContainer>
+  const loginFormComponent = (
+    <LoginForm
+      handleFormChanged={loginForm.handleChanged}
+      handleFormSubmitted={handleLoginFormSubmit}
+    />
   );
+
+  return <FormPageTemplate form={loginFormComponent} />;
 };
 
 const isValidLoginFormData = (data: LoginFormType): boolean => {
