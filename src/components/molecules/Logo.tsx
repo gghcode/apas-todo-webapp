@@ -1,7 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-const LogoContainer = styled.div``;
 const LogoImage = styled.img.attrs({
   src: '/images/logo.png',
 })`
@@ -10,7 +9,7 @@ const LogoImage = styled.img.attrs({
 `;
 
 export const Logo = () => (
-  <LogoContainer>
+  <div>
     <LogoImage />
-  </LogoContainer>
+  </div>
 );
