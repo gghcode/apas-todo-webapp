@@ -2,6 +2,9 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { Title } from '@/components/atoms/Title';
 import { FaFacebookF, FaGoogle } from 'react-icons/fa';
+import { Button } from '@/components/atoms/Button';
+import { Input } from '@/components/atoms/Input';
+import { RedirectButton } from '@/components/atoms/RedirectButton';
 
 const FormWrapper = styled.form`
   width: 100%;
@@ -28,44 +31,6 @@ const LoginButtonWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-`;
-
-const Button = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0 20px;
-  min-width: 160px;
-  height: 50px;
-  background-color: #bd59d4;
-  border-radius: 25px;
-  border: none;
-
-  font-size: 14px;
-  color: #fff;
-  line-height: 1.2;
-  text-transform: uppercase;
-
-  transition: all 0.4s;
-
-  box-shadow: 0 10px 30px 0px rgba(189, 89, 212, 0.5);
-  -webkit-box-shadow: 0 10px 30px 0px rgba(189, 89, 212, 0.5);
-`;
-
-const Input = styled.input`
-  font-size: 16px;
-  color: #4b2354;
-  line-height: 1.2;
-  display: block;
-  width: 100%;
-  height: 62px;
-  background: transparent;
-  padding: 0 20px 0 23px;
-
-  outline: none;
-  border: none;
-
-  box-sizing: border-box;
 `;
 
 const FocusInput = styled.span`
@@ -98,29 +63,6 @@ const TextWrapper = styled.div`
 const SocialLoginsWrapper = styled.div`
   display: flex;
   justify-content: center;
-`;
-
-const SocialLoginButtonWrapper = styled.a`
-  font-size: 25px;
-  color: #3b5998;
-
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background-color: #fff;
-  margin: 5px;
-  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.1);
-  -webkit-box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.1);
-  -o-box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.1);
-  -ms-box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.1);
 `;
 
 interface Props {
@@ -161,12 +103,12 @@ export const LoginForm: React.FC<Props> = (props: Props) => {
           <span>Or login with</span>
         </TextWrapper>
         <SocialLoginsWrapper>
-          <SocialLoginButtonWrapper>
+          <RedirectButton href="www.facebook.com">
             <FaFacebookF />
-          </SocialLoginButtonWrapper>
-          <SocialLoginButtonWrapper>
+          </RedirectButton>
+          <RedirectButton href="www.google.com">
             <FaGoogle />
-          </SocialLoginButtonWrapper>
+          </RedirectButton>
         </SocialLoginsWrapper>
       </FormWrapper>
     </>
