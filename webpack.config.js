@@ -2,11 +2,12 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: path.join(__dirname, 'src', 'index.tsx'),
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', 'css'],
+    extensions: ['.ts', '.tsx', '.js'],
     alias: {
       '@': path.resolve(__dirname, 'src'),
     },
@@ -25,10 +26,6 @@ module.exports = {
         test: /\.tsx?$/,
         loader: 'awesome-typescript-loader',
       },
-      {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
-      },
     ],
   },
   plugins: [
@@ -38,14 +35,18 @@ module.exports = {
       favicon: path.join(__dirname, 'public', 'favicon.ico'),
       inject: true,
     }),
+    new CopyPlugin([
+      { from: 'public/images', to: 'images/' },
+      { from: 'public/fonts', to: 'fonts/' },
+    ]),
   ],
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
     inline: true,
-    hot: true,
     host: '0.0.0.0',
     port: 8081,
     historyApiFallback: true,
+    watchContentBase: true,
+    compress: true,
   },
-  devtool: 'cheap-eval-source-map',
 };

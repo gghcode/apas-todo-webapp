@@ -22,6 +22,10 @@ export class AuthService implements AuthUsecase {
     return true;
   }
 
+  clearAccessToken(): void {
+    this.localStorage.unset(accessTokenKey);
+  }
+
   async login(req: LoginRequest): Promise<TokenResponse> {
     const token = await this.authGateway.login(req);
 
